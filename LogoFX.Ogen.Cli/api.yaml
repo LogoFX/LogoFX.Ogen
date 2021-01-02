@@ -1,0 +1,3958 @@
+openapi: 3.0.2
+info:
+  title: NGCS API
+  version: 1.0.0
+  contact:
+    name: David Kossoglyad
+    email: david@logoui.co.il
+  description: Represents the NGCS API
+servers:
+  - url: 'http://bamangws167/NGCS.WebAPI.CommonServices'
+    description: The endpoint to test services on intranet (temporary)
+  - url: 'http://127.0.0.1:3000'
+    description: JSON Server Default URL
+  - url: 'https://virtserver.swaggerhub.com/LogoFX/NGCS/1.0.0'
+    description: SwaggerHub API Auto Mocking
+tags:
+  - name: Task
+    description: Everything about judge tasks
+  - name: current-user
+    description: TBD
+  - name: Case
+    description: TBD
+  - name: Calendar
+    description: TBD
+paths:
+  /currentuser/displayname:
+    get:
+      tags:
+        - current-user
+      operationId: getDisplayName
+      description: Returns the full name of the current user
+      summary: Returns the name of the current user
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+        '501':
+          description: Not Implemented
+        '502':
+          description: Bad Gateway
+        '503':
+          description: Service Unavailable
+    parameters: []
+  /currentuser/customization:
+    get:
+      tags:
+        - current-user
+      operationId: getCustomization
+      description: TBD
+      summary: TBD
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCustomizationDTO'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+        '501':
+          description: Not Implemented
+        '502':
+          description: Bad Gateway
+        '503':
+          description: Service Unavailable
+    parameters: []
+  /currentuser/customization/update:
+    post:
+      summary: ''
+      operationId: setCustomization
+      description: TBD
+      tags:
+        - current-user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCustomizationDTO'
+            examples:
+              example-1:
+                value:
+                  CustomizationData: '"[{\"key\":\"tasks_grid\",\"value\":[{\"key\":\"priority\",\"value\":true},{\"key\":\"taskName\",\"value\":true},{\"key\":\"caseNumber\",\"value\":true},{\"key\":\"caseType\",\"value\":true},{\"key\":\"caseName\",\"value\":true},{\"key\":\"dueDate\",\"value\":true}]}, {\"key\":\"calendar_general\",\"value\":[{\"key\":\"RefreshFrequency\",\"value\":\"300\"}]}, {\"key\":\"tasks_grid_extensions\",\"value\":[{\"key\":\"applicant\",\"value\":true},{\"key\":\"nextHearingDate\",\"value\":true},{\"key\":\"executionDuration\",\"value\":true},{\"key\":\"allocationDate\",\"value\":true},{\"key\":\"showDate\",\"value\":true},{\"key\":\"label\",\"value\":false},{\"key\":\"taskNote\",\"value\":false},{\"key\":\"courtId\",\"value\":false}]}, {\"key\":\"webs_submissions_grid_extensions\",\"value\":[{\"key\":\"Note\",\"value\":true},{\"key\":\"SourceName\",\"value\":true},{\"key\":\"WebSubmissionTaskStatusDesc\",\"value\":true},{\"key\":\"UpdateDate\",\"value\":true},{\"key\":\"Rejecting Document Reason\",\"value\":true},{\"key\":\"CaseTypeShortName\",\"value\":false},{\"key\":\"IsQuickSubmissionOnWebSite\",\"value\":false}]}]"'
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+        default:
+          description: successful operation
+  /Task/all:
+    get:
+      tags:
+        - Task
+      responses:
+        '200':
+          description: OK. Indicates successful operation.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TasksItemExtendedDTO'
+              examples:
+                example-1:
+                  value:
+                    - AllocatedBy: string
+                      AllocationDate: '2019-08-24T14:15:22Z'
+                      CaseID: 0
+                      CaseName: string
+                      CaseNumber: string
+                      CaseTypeName: string
+                      CompletionReason: 0
+                      CourtID: 0
+                      DocumentID: 0
+                      DTOID: 7ce971c8-b239-4b1b-bc0c-97956cf462fc
+                      DTOStatus: 0
+                      DueDate: '2019-08-24T14:15:22Z'
+                      EntityDescription: string
+                      EntityID: 0
+                      EntityType: 0
+                      EscalationIndication: true
+                      EscalationMethodID: 0
+                      ExecutionDuration: 0
+                      FutureMeetingDate: '2019-08-24T14:15:22Z'
+                      HandlerUser: string
+                      IsClosedWithCase: true
+                      IsDeterminant: true
+                      IsPDFDocExists: true
+                      IsReadOnly: true
+                      IsReturnedFromUser: true
+                      IsTaskVisiting: true
+                      Label: string
+                      ManuallyTaskName: string
+                      MotionApplicant: string
+                      MotionID: 321ae6c2-41b1-4630-917f-f4eb8cad0ab2
+                      Note: string
+                      Priorty: true
+                      RoleID: 0
+                      ShowDate: '2019-08-24T14:15:22Z'
+                      ShowingUpDuration: 0
+                      SittingTypeID: 0
+                      TargetUserName: string
+                      TaskID: 1
+                      TaskName: string
+                      TaskStatus: 0
+                      TaskType: 0
+                      TaskTypeName: string
+                      UpdatingDate: '2019-08-24T14:15:22Z'
+                      UpdatingUser: string
+                      UseCaseID: 54c94003-1036-4e10-bb7d-dbd520f7039b
+                      UserName: string
+        '204':
+          description: NO_CONTENT. The server has fulfilled the request but does not need to return an entity-body.
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: NOT_FOUND
+        '500':
+          description: Internal Server Error
+        '501':
+          description: Not Implemented
+      operationId: GetTasks
+      description: Returns the array of all tasks by search criteria provided
+      parameters: []
+      summary: ''
+  /Task/tasktypesbyrole:
+    get:
+      tags:
+        - Task
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskTypeDTO'
+        '204':
+          description: NO_CONTENT
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+        '501':
+          description: Not Implemented
+        '502':
+          description: Bad Gateway
+        '503':
+          description: Service Unavailable
+      operationId: GetTaskTypesByRoles
+      description: Returns the array of all tasks by search criteria provided
+      parameters: []
+      summary: ''
+  '/Case/getid/group/{numeratorGroupID}/number/{caseNumber}/month/{caseMonth}/year/{caseYear}':
+    get:
+      summary: The endpoint used to obtain the CaseId number
+      tags:
+        - Case
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SingleIntDTO'
+              examples:
+                example-1:
+                  value:
+                    Value: 999
+        '401':
+          description: Unauthorized
+        '402':
+          description: Payment Required
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+        '501':
+          description: Not Implemented
+        '502':
+          description: Bad Gateway
+        '503':
+          description: Service Unavailable
+      operationId: getCaseId
+      description: 'Returns the Case Id by Group, Number, Month, and Year'
+      parameters:
+        - schema:
+            type: number
+            enum:
+              - 1
+              - 2
+            example: 1
+          in: path
+          name: numeratorGroupID
+          required: true
+        - schema:
+            type: number
+            minimum: 1
+            maximum: 99999
+            example: 12345
+          in: path
+          name: caseNumber
+          required: true
+        - schema:
+            type: number
+          in: path
+          name: caseMonth
+          required: true
+        - schema:
+            type: number
+          in: path
+          name: caseYear
+          required: true
+  '/Calendar/from/{from}/to/{to}/meetings':
+    get:
+      summary: The endpoint used to obtain the meetings calendar
+      tags:
+        - Calendar
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeetingDataByUpnDTO'
+              examples:
+                example-1:
+                  value:
+                    MeetingDataByUPN:
+                      Instances:
+                        - DTOID: 81f40752-d40d-4870-a6d8-be5ce8d9b4a3
+                          DTOStatus: 2
+                          MeetingID: 1
+                          MeetingDate: '2020-12-10T13:58:20.3703333+02:00'
+                          StartTime: sample string 3
+                          FinishTime: sample string 4
+                          SittingID: 1
+                          SittingTypeName: sample string 5
+                          CaseID: 1
+                          CaseNumber: sample string
+                          CaseName: sample string 6
+                          SittingsNumber: 1
+                        - DTOID: 81f40752-d40d-4870-a6d8-be5ce8d9b4a3
+                          DTOStatus: 2
+                          MeetingID: 1
+                          MeetingDate: '2020-12-10T13:58:20.3703333+02:00'
+                          StartTime: sample string 3
+                          FinishTime: sample string 4
+                          SittingID: 1
+                          SittingTypeName: sample string 5
+                          CaseID: 1
+                          CaseNumber: sample string
+                          CaseName: sample string 6
+                          SittingsNumber: 1
+        '401':
+          description: Unauthorized
+        '402':
+          description: Payment Required
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+        '501':
+          description: Not Implemented
+        '502':
+          description: Bad Gateway
+        '503':
+          description: Service Unavailable
+      operationId: getMeetingsCalendar
+      description: Returns the meetings calendar by date range
+    parameters:
+      - schema:
+          type: string
+          format: date-time
+        name: from
+        in: path
+        required: true
+        description: From date
+      - schema:
+          type: string
+          format: date-time
+        name: to
+        in: path
+        required: true
+        description: To date
+  '/Submission/showdetails/case/{caseID}/document/{documentID}':
+    parameters:
+      - schema:
+          type: integer
+        name: caseID
+        in: path
+        required: true
+      - schema:
+          type: integer
+        name: documentID
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebSubmissionTaskDTO'
+              examples:
+                example-1:
+                  value:
+                    WebSubmissionTask:
+                      - DTOID: 85179cc4-3188-4cc4-9a36-11a19b7e479d
+                        DTOStatus: 2
+                        WebSubmissionTaskID: 1
+                        WebSubmissionTaskTypeID: 1
+                        IsWebSubmissionTaskTypeChanged: true
+                        SourceID: 1
+                        CaseID: 1
+                        IsCaseChanged: true
+                        MotionID: 1
+                        CasePleaID: 1
+                        SubmissionTaskID: 1
+                        PaymentLegalEntityID: 1
+                        DocumentSubmissionDate: '2020-12-11T20:41:17.2575518+02:00'
+                        IdentityCardNumber: sample string 3
+                        LawyerOfficeLegalEntityID: 1
+                        InterfaceDestinationID: 1
+                        SendingSystemEntityID: sample string 4
+                        DocumentID: 1
+                        EmailAddress: sample string 5
+                        WebSubmissionTaskStatusID: 1
+                        RejectingDocumentReasonID: 1
+                        RejectingDocumentComment: sample string 6
+                        UpdateDate: '2020-12-11T20:41:17.2585541+02:00'
+                        UpdateUser: sample string 7
+                        IsTreated: true
+                        NoticeOfOmissionRejectionDocumentID: 1
+                        OriginalSubmittedDocumentID: 1
+                        DestinationTargetUserRelatedToSubmission: sample string 8
+                        IsQuickSubmissionOnWebSite: true
+                      - DTOID: 85179cc4-3188-4cc4-9a36-11a19b7e479d
+                        DTOStatus: 2
+                        WebSubmissionTaskID: 1
+                        WebSubmissionTaskTypeID: 1
+                        IsWebSubmissionTaskTypeChanged: true
+                        SourceID: 1
+                        CaseID: 1
+                        IsCaseChanged: true
+                        MotionID: 1
+                        CasePleaID: 1
+                        SubmissionTaskID: 1
+                        PaymentLegalEntityID: 1
+                        DocumentSubmissionDate: '2020-12-11T20:41:17.2575518+02:00'
+                        IdentityCardNumber: sample string 3
+                        LawyerOfficeLegalEntityID: 1
+                        InterfaceDestinationID: 1
+                        SendingSystemEntityID: sample string 4
+                        DocumentID: 1
+                        EmailAddress: sample string 5
+                        WebSubmissionTaskStatusID: 1
+                        RejectingDocumentReasonID: 1
+                        RejectingDocumentComment: sample string 6
+                        UpdateDate: '2020-12-11T20:41:17.2585541+02:00'
+                        UpdateUser: sample string 7
+                        IsTreated: true
+                        NoticeOfOmissionRejectionDocumentID: 1
+                        OriginalSubmittedDocumentID: 1
+                        DestinationTargetUserRelatedToSubmission: sample string 8
+                        IsQuickSubmissionOnWebSite: true
+                    WebSubmissionTaskExternalCase:
+                      - DTOID: d051becb-81be-4503-88d9-1ae97e26e5d6
+                        DTOStatus: 2
+                        WebSubmissionTaskExternalCaseID: 1
+                        WebSubmissionTaskID: 1
+                        ExternalCaseNumber: sample string 3
+                        ExternalCaseTypeID: 1
+                      - DTOID: d051becb-81be-4503-88d9-1ae97e26e5d6
+                        DTOStatus: 2
+                        WebSubmissionTaskExternalCaseID: 1
+                        WebSubmissionTaskID: 1
+                        ExternalCaseNumber: sample string 3
+                        ExternalCaseTypeID: 1
+                    WebSubmissionTaskHistory:
+                      - DTOID: b8201107-2f86-464e-83f1-4cc5dbbd1c81
+                        DTOStatus: 2
+                        WebSubmissionTaskHistoryID: 1
+                        WebSubmissionTaskID: 1
+                        WebSubmissionTaskStatusID: 1
+                        RejectingDocumentReasonID: 1
+                        ListOfOmissionReasonDesc: sample string 3
+                        RejectingDocumentComment: sample string 4
+                        UpdateDate: '2020-12-11T20:41:17.2605542+02:00'
+                        UpdateUser: sample string 5
+                        DocumentID: 1
+                        NoticeOfOmissionRejectionDocumentID: 1
+                      - DTOID: b8201107-2f86-464e-83f1-4cc5dbbd1c81
+                        DTOStatus: 2
+                        WebSubmissionTaskHistoryID: 1
+                        WebSubmissionTaskID: 1
+                        WebSubmissionTaskStatusID: 1
+                        RejectingDocumentReasonID: 1
+                        ListOfOmissionReasonDesc: sample string 3
+                        RejectingDocumentComment: sample string 4
+                        UpdateDate: '2020-12-11T20:41:17.2605542+02:00'
+                        UpdateUser: sample string 5
+                        DocumentID: 1
+                        NoticeOfOmissionRejectionDocumentID: 1
+                    WebSubmissionTaskData:
+                      - DTOID: 61693832-1636-40c6-80e1-8c104d4a2a00
+                        DTOStatus: 2
+                        WebSubmissionTaskDataID: 1
+                        WebSubmissionTaskID: 1
+                        WebSubmissionData: sample string 3
+                      - DTOID: 61693832-1636-40c6-80e1-8c104d4a2a00
+                        DTOStatus: 2
+                        WebSubmissionTaskDataID: 1
+                        WebSubmissionTaskID: 1
+                        WebSubmissionData: sample string 3
+                    WebSubmissionTaskOmissionReason:
+                      - DTOID: 70828e79-942b-4bf0-ac9e-4eb9c87b98c0
+                        DTOStatus: 2
+                        WebSubmissionTaskOmissionReasonID: 1
+                        WebSubmissionTaskID: 1
+                        OmissionReasonID: 1
+                      - DTOID: 70828e79-942b-4bf0-ac9e-4eb9c87b98c0
+                        DTOStatus: 2
+                        WebSubmissionTaskOmissionReasonID: 1
+                        WebSubmissionTaskID: 1
+                        OmissionReasonID: 1
+                    WebSubmissionTaskCase:
+                      - DTOID: 083435a0-4501-422b-8576-2f1552981bf8
+                        DTOStatus: 2
+                        WebSubmissionTaskCaseID: 1
+                        WebSubmissionTaskID: 1
+                        CourtID: 1
+                        ProceedingID: 1
+                        CaseTypeID: 1
+                        CaseInterestID: 1
+                        PublicationProhibitioRequestDocumentID: 1
+                      - DTOID: 083435a0-4501-422b-8576-2f1552981bf8
+                        DTOStatus: 2
+                        WebSubmissionTaskCaseID: 1
+                        WebSubmissionTaskID: 1
+                        CourtID: 1
+                        ProceedingID: 1
+                        CaseTypeID: 1
+                        CaseInterestID: 1
+                        PublicationProhibitioRequestDocumentID: 1
+                    WebSubmissionTaskMotion:
+                      - DTOID: aa28ed8c-c193-4670-9974-a3f4aed26814
+                        DTOStatus: 2
+                        WebSubmissionTaskMotionID: 1
+                        WebSubmissionTaskID: 1
+                        MotionTypeID: 1
+                      - DTOID: aa28ed8c-c193-4670-9974-a3f4aed26814
+                        DTOStatus: 2
+                        WebSubmissionTaskMotionID: 1
+                        WebSubmissionTaskID: 1
+                        MotionTypeID: 1
+                    WebSubmissionTaskPlea:
+                      - DTOID: 9345d9ae-de30-4c93-a074-489ce407f270
+                        DTOStatus: 2
+                        WebSubmissionTaskPleaID: 1
+                        WebSubmissionTaskID: 1
+                        PleaTypeID: 1
+                      - DTOID: 9345d9ae-de30-4c93-a074-489ce407f270
+                        DTOStatus: 2
+                        WebSubmissionTaskPleaID: 1
+                        WebSubmissionTaskID: 1
+                        PleaTypeID: 1
+                    WebSubmissionTaskExemption:
+                      - DTOID: a762795b-c95b-444e-968d-1f06f905f548
+                        DTOStatus: 2
+                        WebSubmissionTaskExemptionID: 1
+                        WebSubmissionTaskID: 1
+                        IsFeeExemptionExists: true
+                        IsFeeExemptionRequest: true
+                        IsEligibilityForExemptionApproved: true
+                        IsGuaranteeExemptionRequest: true
+                        FeeExemptionRequestDocumentID: 1
+                      - DTOID: a762795b-c95b-444e-968d-1f06f905f548
+                        DTOStatus: 2
+                        WebSubmissionTaskExemptionID: 1
+                        WebSubmissionTaskID: 1
+                        IsFeeExemptionExists: true
+                        IsFeeExemptionRequest: true
+                        IsEligibilityForExemptionApproved: true
+                        IsGuaranteeExemptionRequest: true
+                        FeeExemptionRequestDocumentID: 1
+                    WebSubmissionTaskStatisticalGeneral:
+                      - DTOID: 0e027319-2b05-4ea0-b057-81cf7bb833e5
+                        DTOStatus: 2
+                        WebSubmissionTaskStatisticalGeneralID: 1
+                        WebSubmissionTaskID: 1
+                        DurationOfSecretariatTreatmentInMin: 1
+                        CalculationDateOfTreatmentTime: '2020-12-11T20:41:17.2675609+02:00'
+                      - DTOID: 0e027319-2b05-4ea0-b057-81cf7bb833e5
+                        DTOStatus: 2
+                        WebSubmissionTaskStatisticalGeneralID: 1
+                        WebSubmissionTaskID: 1
+                        DurationOfSecretariatTreatmentInMin: 1
+                        CalculationDateOfTreatmentTime: '2020-12-11T20:41:17.2675609+02:00'
+      operationId: getSubmissionTask
+      description: TBD
+  '/Submission/from/{from}/to/{to}/docsubmissions':
+    parameters:
+      - schema:
+          type: string
+          format: date
+        name: from
+        in: path
+        required: true
+      - schema:
+          type: string
+          format: date
+        name: to
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentsSubmittedRemotelyDTO'
+              examples:
+                example-1:
+                  value:
+                    DocumentsSubmittedRemotelyDataTable:
+                      Instances:
+                        - DTOID: fd7cb8aa-fdb4-43e1-af16-cb26057a75fc
+                          DTOStatus: 2
+                          WebSubmissionTaskID: 1
+                          DocumentSubmissionDate: '2020-12-11T20:42:46.3321972+02:00'
+                          CaseID: 1
+                          CaseDisplayIdentifier: sample string 3
+                          WebSubmissionTaskTypeID: 1
+                          WebSubmissionTaskTypeDesc: sample string 4
+                          SourceID: 1
+                          SourceName: sample string 5
+                          SendingSystemEntityID: sample string 6
+                          WebSubmissionTaskStatusID: 1
+                          WebSubmissionTaskStatusDesc: sample string 7
+                          UpdateUser: sample string 8
+                          UpdateDate: '2020-12-11T20:42:46.3321972+02:00'
+                          RejectingDocumentReasonID: 1
+                          RejectingDocumentOrOmissionReasonDesc: sample string 9
+                          RejectingDocumentComment: sample string 10
+                          DocumentID: 1
+                          FileID: sample string 11
+                          IsTreated: true
+                          JudicialPerson: sample string 12
+                          CaseTypeName: sample string 13
+                          CaseTypeShortName: sample string 14
+                          MotionOrDocumentOrCaseInterestTypeDesc: sample string 15
+                          FutureSittingDate: '2020-12-11T20:42:46.3321972+02:00'
+                          NoticeOfOmissionRejectionDocumentID: 1
+                          NoticeOfOmissionRejectionFileID: sample string 16
+                          IsCaseChanged: true
+                          DestinationTargetUserRelatedToSubmission: sample string 17
+                          IsQuickSubmissionOnWebSite: true
+                          PresentationDate: '2020-12-11T20:42:46.3321972+02:00'
+                          EmailAddress: sample string 18
+                        - DTOID: fd7cb8aa-fdb4-43e1-af16-cb26057a75fc
+                          DTOStatus: 2
+                          WebSubmissionTaskID: 1
+                          DocumentSubmissionDate: '2020-12-11T20:42:46.3321972+02:00'
+                          CaseID: 1
+                          CaseDisplayIdentifier: sample string 3
+                          WebSubmissionTaskTypeID: 1
+                          WebSubmissionTaskTypeDesc: sample string 4
+                          SourceID: 1
+                          SourceName: sample string 5
+                          SendingSystemEntityID: sample string 6
+                          WebSubmissionTaskStatusID: 1
+                          WebSubmissionTaskStatusDesc: sample string 7
+                          UpdateUser: sample string 8
+                          UpdateDate: '2020-12-11T20:42:46.3321972+02:00'
+                          RejectingDocumentReasonID: 1
+                          RejectingDocumentOrOmissionReasonDesc: sample string 9
+                          RejectingDocumentComment: sample string 10
+                          DocumentID: 1
+                          FileID: sample string 11
+                          IsTreated: true
+                          JudicialPerson: sample string 12
+                          CaseTypeName: sample string 13
+                          CaseTypeShortName: sample string 14
+                          MotionOrDocumentOrCaseInterestTypeDesc: sample string 15
+                          FutureSittingDate: '2020-12-11T20:42:46.3321972+02:00'
+                          NoticeOfOmissionRejectionDocumentID: 1
+                          NoticeOfOmissionRejectionFileID: sample string 16
+                          IsCaseChanged: true
+                          DestinationTargetUserRelatedToSubmission: sample string 17
+                          IsQuickSubmissionOnWebSite: true
+                          PresentationDate: '2020-12-11T20:42:46.3321972+02:00'
+                          EmailAddress: sample string 18
+      operationId: getDocSubmissions
+      description: TBD
+  /Submission/alldocsubmissions:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentsSubmittedRemotelyDTO'
+              examples:
+                example-1:
+                  value:
+                    DocumentsSubmittedRemotelyDataTable:
+                      Instances:
+                        - DTOID: fd7cb8aa-fdb4-43e1-af16-cb26057a75fc
+                          DTOStatus: 2
+                          WebSubmissionTaskID: 1
+                          DocumentSubmissionDate: '2020-12-11T20:42:46.3321972+02:00'
+                          CaseID: 1
+                          CaseDisplayIdentifier: sample string 3
+                          WebSubmissionTaskTypeID: 1
+                          WebSubmissionTaskTypeDesc: sample string 4
+                          SourceID: 1
+                          SourceName: sample string 5
+                          SendingSystemEntityID: sample string 6
+                          WebSubmissionTaskStatusID: 1
+                          WebSubmissionTaskStatusDesc: sample string 7
+                          UpdateUser: sample string 8
+                          UpdateDate: '2020-12-11T20:42:46.3321972+02:00'
+                          RejectingDocumentReasonID: 1
+                          RejectingDocumentOrOmissionReasonDesc: sample string 9
+                          RejectingDocumentComment: sample string 10
+                          DocumentID: 1
+                          FileID: sample string 11
+                          IsTreated: true
+                          JudicialPerson: sample string 12
+                          CaseTypeName: sample string 13
+                          CaseTypeShortName: sample string 14
+                          MotionOrDocumentOrCaseInterestTypeDesc: sample string 15
+                          FutureSittingDate: '2020-12-11T20:42:46.3321972+02:00'
+                          NoticeOfOmissionRejectionDocumentID: 1
+                          NoticeOfOmissionRejectionFileID: sample string 16
+                          IsCaseChanged: true
+                          DestinationTargetUserRelatedToSubmission: sample string 17
+                          IsQuickSubmissionOnWebSite: true
+                          PresentationDate: '2020-12-11T20:42:46.3321972+02:00'
+                          EmailAddress: sample string 18
+                        - DTOID: fd7cb8aa-fdb4-43e1-af16-cb26057a75fc
+                          DTOStatus: 2
+                          WebSubmissionTaskID: 1
+                          DocumentSubmissionDate: '2020-12-11T20:42:46.3321972+02:00'
+                          CaseID: 1
+                          CaseDisplayIdentifier: sample string 3
+                          WebSubmissionTaskTypeID: 1
+                          WebSubmissionTaskTypeDesc: sample string 4
+                          SourceID: 1
+                          SourceName: sample string 5
+                          SendingSystemEntityID: sample string 6
+                          WebSubmissionTaskStatusID: 1
+                          WebSubmissionTaskStatusDesc: sample string 7
+                          UpdateUser: sample string 8
+                          UpdateDate: '2020-12-11T20:42:46.3321972+02:00'
+                          RejectingDocumentReasonID: 1
+                          RejectingDocumentOrOmissionReasonDesc: sample string 9
+                          RejectingDocumentComment: sample string 10
+                          DocumentID: 1
+                          FileID: sample string 11
+                          IsTreated: true
+                          JudicialPerson: sample string 12
+                          CaseTypeName: sample string 13
+                          CaseTypeShortName: sample string 14
+                          MotionOrDocumentOrCaseInterestTypeDesc: sample string 15
+                          FutureSittingDate: '2020-12-11T20:42:46.3321972+02:00'
+                          NoticeOfOmissionRejectionDocumentID: 1
+                          NoticeOfOmissionRejectionFileID: sample string 16
+                          IsCaseChanged: true
+                          DestinationTargetUserRelatedToSubmission: sample string 17
+                          IsQuickSubmissionOnWebSite: true
+                          PresentationDate: '2020-12-11T20:42:46.3321972+02:00'
+                          EmailAddress: sample string 18
+      operationId: getSubmissions
+      description: TBD
+  '/Decision/{decisionId}/small':
+    parameters:
+      - schema:
+          type: integer
+        name: decisionId
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DecisionDTO'
+      operationId: getDecisionSmall
+      description: TBD
+  '/Case/{caseID}/comments':
+    parameters:
+      - schema:
+          type: integer
+        name: caseID
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ElectronicFolderCommentItemDTO'
+      operationId: getCaseComments
+      description: TBD
+  '/Task/{taskID}/insertreadrow':
+    parameters:
+      - schema:
+          type: integer
+        name: taskID
+        in: path
+        required: true
+    post:
+      tags:
+        - Task
+      summary: ''
+      operationId: postTaskInsertReadRow
+      responses:
+        '200':
+          description: OK
+      description: TBD
+      parameters: []
+  '/Task/{taskID}/deleteunreadrow':
+    parameters:
+      - schema:
+          type: integer
+        name: taskID
+        in: path
+        required: true
+    post:
+      tags:
+        - Task
+      summary: ''
+      operationId: postTaskDeleteUnreadRow
+      description: TBD
+      responses:
+        '200':
+          description: OK
+  /Document/documentStreamerURL:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+      operationId: getDocumentStreamerURL
+      description: TBD
+  /Document/pdfViewerURL:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+      operationId: getDocumentPdfViewerURL
+      description: TBD
+  '/Document/{documentID}/view':
+    parameters:
+      - schema:
+          type: integer
+        name: documentID
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentDTO'
+              examples:
+                example-1:
+                  value:
+                    Document:
+                      Instances:
+                        - DTOID: fa368fe0-45bb-45a1-892f-82c9ac38a153
+                          DTOStatus: 2
+                          DocumentID: 1
+                          DocumentMainID: 1
+                          CaseID: 1
+                          ConvertCaseID: 1
+                          OldDocumentID: sample string 3
+                          OldCaseID: sample string 4
+                          DocumentIncludedDate: '2020-12-26T13:47:19.3238775+02:00'
+                          DocumentDesc: sample string 5
+                          DocumentDirectionID: 1
+                          SourceID: 1
+                          SavingMethodID: 1
+                          PaperDocumentSavingPlace: sample string 6
+                          VersionNumber: 1
+                          DocumentVersionTypeID: 1
+                          IsAttachment: true
+                          AttachmentOrdinalNumber: 1
+                          DocumentTypeID: 1
+                          DocumentSavingDate: '2020-12-26T13:47:19.3248758+02:00'
+                          DocumentChangeDate: '2020-12-26T13:47:19.3248758+02:00'
+                          IsScanned: true
+                          DocumentScanningDate: '2020-12-26T13:47:19.325888+02:00'
+                          PageQuantity: 1
+                          DocumentStatusID: 1
+                          DocumentStatusChangeDate: '2020-12-26T13:47:19.325888+02:00'
+                          TemplateID: 1
+                          TemplateVersionID: 1
+                          DocumentChangeUserID: sample string 7
+                          DocumentCreationUserID: sample string 8
+                          OriginalDocumentID: 1
+                          PrivillegeID: 1
+                          FromPage: 1
+                          ToPage: 1
+                          IsScannedWithoutEntity: true
+                          DocumentComment: sample string 9
+                          BoxNumber: sample string 10
+                          Archive: sample string 11
+                          CasePartyID: 1
+                          FileID: sample string 12
+                          OriginalFileID: sample string 13
+                          CaseDisplayNumber: sample string 14
+                          URL: sample string 15
+                          SplittedNumberOfPages: 1
+                          isOliveProcessed: true
+                          CasePartyDisplayName: sample string 16
+                          OlivePriority: 1
+                          PreFetchUrl: sample string 17
+                          DocumentCdImportID: sample string 18
+                          MetaDataTypeID: 1
+                          MetaDataChangeDate: '2020-12-26T13:47:19.3278765+02:00'
+                          MetaData: sample string 19
+                          NewVersionRequired: true
+                          IsReturned: true
+                          SignatureURL: sample string 20
+                          IsCritical: true
+                          IsEntityCanceled: true
+                          IsRepresentativeRegistryOpenToPublic: true
+                          PresentationDate: '2020-12-26T13:47:19.3278765+02:00'
+                        - DTOID: fa368fe0-45bb-45a1-892f-82c9ac38a153
+                          DTOStatus: 2
+                          DocumentID: 1
+                          DocumentMainID: 1
+                          CaseID: 1
+                          ConvertCaseID: 1
+                          OldDocumentID: sample string 3
+                          OldCaseID: sample string 4
+                          DocumentIncludedDate: '2020-12-26T13:47:19.3238775+02:00'
+                          DocumentDesc: sample string 5
+                          DocumentDirectionID: 1
+                          SourceID: 1
+                          SavingMethodID: 1
+                          PaperDocumentSavingPlace: sample string 6
+                          VersionNumber: 1
+                          DocumentVersionTypeID: 1
+                          IsAttachment: true
+                          AttachmentOrdinalNumber: 1
+                          DocumentTypeID: 1
+                          DocumentSavingDate: '2020-12-26T13:47:19.3248758+02:00'
+                          DocumentChangeDate: '2020-12-26T13:47:19.3248758+02:00'
+                          IsScanned: true
+                          DocumentScanningDate: '2020-12-26T13:47:19.325888+02:00'
+                          PageQuantity: 1
+                          DocumentStatusID: 1
+                          DocumentStatusChangeDate: '2020-12-26T13:47:19.325888+02:00'
+                          TemplateID: 1
+                          TemplateVersionID: 1
+                          DocumentChangeUserID: sample string 7
+                          DocumentCreationUserID: sample string 8
+                          OriginalDocumentID: 1
+                          PrivillegeID: 1
+                          FromPage: 1
+                          ToPage: 1
+                          IsScannedWithoutEntity: true
+                          DocumentComment: sample string 9
+                          BoxNumber: sample string 10
+                          Archive: sample string 11
+                          CasePartyID: 1
+                          FileID: sample string 12
+                          OriginalFileID: sample string 13
+                          CaseDisplayNumber: sample string 14
+                          URL: sample string 15
+                          SplittedNumberOfPages: 1
+                          isOliveProcessed: true
+                          CasePartyDisplayName: sample string 16
+                          OlivePriority: 1
+                          PreFetchUrl: sample string 17
+                          DocumentCdImportID: sample string 18
+                          MetaDataTypeID: 1
+                          MetaDataChangeDate: '2020-12-26T13:47:19.3278765+02:00'
+                          MetaData: sample string 19
+                          NewVersionRequired: true
+                          IsReturned: true
+                          SignatureURL: sample string 20
+                          IsCritical: true
+                          IsEntityCanceled: true
+                          IsRepresentativeRegistryOpenToPublic: true
+                          PresentationDate: '2020-12-26T13:47:19.3278765+02:00'
+                    DocumentCase:
+                      Instances:
+                        - DTOID: 361df263-05de-4313-9033-dfb0d8c77fb7
+                          DTOStatus: 2
+                          CaseID: 1
+                          DocumentID: 1
+                        - DTOID: 361df263-05de-4313-9033-dfb0d8c77fb7
+                          DTOStatus: 2
+                          CaseID: 1
+                          DocumentID: 1
+                    Bookmark:
+                      Instances:
+                        - DTOID: ede1697c-cb6b-4611-80c5-fba0976788f2
+                          DTOStatus: 2
+                          BookmarkID: 1
+                          DocumentID: 1
+                          BookmarkName: sample string 3
+                          DocumentPage: 1
+                        - DTOID: ede1697c-cb6b-4611-80c5-fba0976788f2
+                          DTOStatus: 2
+                          BookmarkID: 1
+                          DocumentID: 1
+                          BookmarkName: sample string 3
+                          DocumentPage: 1
+                    DocumentNote:
+                      Instances:
+                        - DTOID: c0b674f7-8680-45fd-89ed-4cbefae6c66b
+                          DTOStatus: 2
+                          DocumentNoteID: 1
+                          DocumentID: 1
+                          DocumentNoteCreateDate: '2020-12-26T13:47:19.330876+02:00'
+                          CreationUserID: sample string 3
+                          DocumentNoteDesc: sample string 4
+                          DocumentNoteXML: sample string 5
+                          DescriptionPageNumber: 1
+                          AccessTypeID: 1
+                          NoteTypeID: 1
+                          X1Location: 1
+                          X2Location: 1
+                          Y1Location: 1
+                          Y2Location: 1
+                          XmlContent: sample string 6
+                          X1RectLocation: 1
+                          X2RectLocation: 1
+                          Y1RectLocation: 1
+                          Y2RectLocation: 1
+                          IsPopupOpen: true
+                          CDATA: sample string 7
+                          Title: sample string 8
+                          Page: 1
+                          IsVisiable: true
+                          ActivityStatusID: 1
+                          NoteCaseTitle: sample string 9
+                          NoteComposerTitle: sample string 10
+                          NoteZoom: 1
+                        - DTOID: c0b674f7-8680-45fd-89ed-4cbefae6c66b
+                          DTOStatus: 2
+                          DocumentNoteID: 1
+                          DocumentID: 1
+                          DocumentNoteCreateDate: '2020-12-26T13:47:19.330876+02:00'
+                          CreationUserID: sample string 3
+                          DocumentNoteDesc: sample string 4
+                          DocumentNoteXML: sample string 5
+                          DescriptionPageNumber: 1
+                          AccessTypeID: 1
+                          NoteTypeID: 1
+                          X1Location: 1
+                          X2Location: 1
+                          Y1Location: 1
+                          Y2Location: 1
+                          XmlContent: sample string 6
+                          X1RectLocation: 1
+                          X2RectLocation: 1
+                          Y1RectLocation: 1
+                          Y2RectLocation: 1
+                          IsPopupOpen: true
+                          CDATA: sample string 7
+                          Title: sample string 8
+                          Page: 1
+                          IsVisiable: true
+                          ActivityStatusID: 1
+                          NoteCaseTitle: sample string 9
+                          NoteComposerTitle: sample string 10
+                          NoteZoom: 1
+      operationId: getDocumentView
+      description: TBD
+  '/Document/{documentID}/loadDecisionNote':
+    parameters:
+      - schema:
+          type: integer
+        name: documentID
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+      operationId: getDocumentLoadDecisionNote
+      description: TBD
+  '/Document/{documentID}/caselist':
+    parameters:
+      - schema:
+          type: integer
+        name: documentID
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+      operationId: getDocumentCaseList
+      description: TBD
+  '/Document/{documentID}/court/{courtID}/word':
+    parameters:
+      - schema:
+          type: integer
+        name: documentID
+        in: path
+        required: true
+      - schema:
+          type: integer
+        name: courtID
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentDTO'
+      operationId: getDocumentCourtWord
+      description: TBD
+  '/Document/{documentID}/isDecisionNoteDraft':
+    parameters:
+      - schema:
+          type: integer
+        name: documentID
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: boolean
+      operationId: getDocumentIsDecisionNoteDraft
+      description: TBD
+components:
+  schemas:
+    MeetingDataByUpnItemDTO:
+      description: ''
+      type: object
+      properties:
+        DTOID:
+          type: string
+          minLength: 1
+        DTOStatus:
+          type: number
+        MeetingID:
+          type: number
+        MeetingDate:
+          type: string
+          minLength: 1
+          format: date-time
+        StartTime:
+          type: string
+          minLength: 1
+        FinishTime:
+          type: string
+          minLength: 1
+        SittingID:
+          type: number
+        SittingTypeName:
+          type: string
+          minLength: 1
+        CaseID:
+          type: number
+        CaseNumber:
+          type: string
+        CaseName:
+          type: string
+          minLength: 1
+        SittingsNumber:
+          type: number
+      required:
+        - DTOID
+        - DTOStatus
+        - MeetingID
+        - MeetingDate
+        - StartTime
+        - FinishTime
+        - SittingID
+        - SittingTypeName
+        - CaseID
+        - CaseNumber
+        - CaseName
+        - SittingsNumber
+    UserDTO:
+      title: UserDTO
+      type: object
+      properties:
+        DisplayName:
+          type: string
+          x-faker: faker.name.findName()
+    UserCustomizationDTO:
+      title: UserCustomizationDTO
+      type: object
+      properties:
+        CustomizationData:
+          type: string
+          x-faker: '"[{\"key\":\"tasks_grid\",\"value\":[{\"key\":\"priority\",\"value\":true},{\"key\":\"taskName\",\"value\":true},{\"key\":\"caseNumber\",\"value\":true},{\"key\":\"caseType\",\"value\":true},{\"key\":\"caseName\",\"value\":true},{\"key\":\"dueDate\",\"value\":true}]}, {\"key\":\"calendar_general\",\"value\":[{\"key\":\"RefreshFrequency\",\"value\":\"300\"}]}, {\"key\":\"tasks_grid_extensions\",\"value\":[{\"key\":\"applicant\",\"value\":true},{\"key\":\"nextHearingDate\",\"value\":true},{\"key\":\"executionDuration\",\"value\":true},{\"key\":\"allocationDate\",\"value\":true},{\"key\":\"showDate\",\"value\":true},{\"key\":\"label\",\"value\":false},{\"key\":\"taskNote\",\"value\":false},{\"key\":\"courtId\",\"value\":false}]}, {\"key\":\"webs_submissions_grid_extensions\",\"value\":[{\"key\":\"Note\",\"value\":true},{\"key\":\"SourceName\",\"value\":true},{\"key\":\"WebSubmissionTaskStatusDesc\",\"value\":true},{\"key\":\"UpdateDate\",\"value\":true},{\"key\":\"Rejecting Document Reason\",\"value\":true},{\"key\":\"CaseTypeShortName\",\"value\":false},{\"key\":\"IsQuickSubmissionOnWebSite\",\"value\":false}]}]"'
+    TasksItemExtendedDTO:
+      title: TasksItemExtendedDTO
+      type: object
+      description: Represents the task document.
+      x-examples:
+        example-1:
+          DTOID: b41f9267-6433-4616-ac5b-99c312450771
+          DTOStatus: 2
+          TaskID: sample string 3
+          ShowDate: '2020-12-10T17:38:35.6754497+02:00'
+          Note: sample string 4
+          TaskType: 1
+          TaskName: sample string 5
+          TaskStatus: 1
+          CaseNumber: sample string 6
+          Priorty: true
+          RoleID: 1
+          CaseID: 1
+          EntityType: 1
+          EntityID: 1
+          EntityDescription: sample string 7
+          UserName: sample string 8
+          AllocatedBy: sample string 9
+          AllocationDate: '2020-12-10T17:38:35.6764447+02:00'
+          UseCaseID: 1
+          ExecutionDuration: 1
+          ShowingUpDuration: 1
+          CompletionReason: 1
+          EscalationMethodID: 1
+          IsDeterminant: true
+          EscalationIndication: true
+          SittingTypeID: 1
+          ManuallyTaskName: sample string 10
+          TargetUserName: sample string 11
+          HandlerUser: sample string 12
+          IsReturnedFromUser: true
+          IsReadOnly: true
+          DueDate: '2020-12-10T17:38:35.6784496+02:00'
+          UpdatingDate: '2020-12-10T17:38:35.6784496+02:00'
+          UpdatingUser: sample string 13
+          CourtID: 1
+          IsClosedWithCase: true
+          DocumentID: 1
+          MotionID: 1
+          IsTaskVisiting: true
+          IsPDFDocExists: true
+          Label: sample string 14
+      properties:
+        AllocatedBy:
+          type: string
+          x-faker: faker.name.findName()
+        AllocationDate:
+          type: string
+          format: date-time
+          x-faker: 'faker.date.between(`01/01/2000`, `01/01/2021`)'
+        CaseID:
+          type: integer
+          x-faker: 'faker.random.number({min: 10000000,  max: 99999999})'
+        CaseName:
+          type: string
+          x-faker: faker.lorem.words(1)
+        CaseNumber:
+          type: string
+          x-faker: '`${faker.random.number({min: 10000,  max: 99999})}-${faker.random.number({min: 1,  max: 12})}-${faker.random.number({min: 0,  max: 20})}`'
+        CaseTypeName:
+          type: string
+          x-faker: faker.lorem.words(1)
+        CompletionReason:
+          type: integer
+          x-faker: 1
+        CourtID:
+          type: integer
+          x-faker: 15
+        DocumentID:
+          type: integer
+          x-faker: 'faker.random.number({min: 10000000,  max: 99999999})'
+        DTOID:
+          type: string
+          format: uuid
+          x-faker: faker.random.uuid()
+        DTOStatus:
+          type: integer
+          x-faker: 2
+        DueDate:
+          type: string
+          format: date-time
+          x-faker: 'faker.date.between(`01/01/2000`, `01/01/2021`)'
+        EntityDescription:
+          type: string
+          x-faker: 'faker.lorem.words(faker.random.number({min: 2,  max: 7}))'
+        EntityID:
+          type: integer
+          x-faker: 0
+        EntityType:
+          type: integer
+          x-faker: 1
+        EscalationIndication:
+          type: boolean
+          x-faker: faker.random.boolean()
+        EscalationMethodID:
+          type: integer
+          x-faker: 1
+        ExecutionDuration:
+          type: integer
+          x-faker: 'faker.random.number({min: 1,  max: 7})'
+        FutureMeetingDate:
+          type: string
+          format: date-time
+          x-faker: 'faker.date.between(`01/01/2000`, `01/01/2021`)'
+        HandlerUser:
+          type: string
+          x-faker: faker.name.findName()
+        IsClosedWithCase:
+          type: boolean
+          x-faker: faker.random.boolean()
+        IsDeterminant:
+          type: boolean
+          x-faker: faker.random.boolean()
+        IsPDFDocExists:
+          type: boolean
+          x-faker: faker.random.boolean()
+        IsReadOnly:
+          type: boolean
+          x-faker: faker.random.boolean()
+        IsReturnedFromUser:
+          type: boolean
+          x-faker: faker.random.boolean()
+        IsTaskVisiting:
+          type: boolean
+          x-faker: faker.random.boolean()
+        Label:
+          type: string
+          x-faker: faker.lorem.words(1)
+        ManuallyTaskName:
+          type: string
+          x-faker: 'faker.lorem.words(faker.random.number({min: 2,  max: 3}))'
+        MotionApplicant:
+          type: string
+          x-faker: faker.lorem.words(1)
+        MotionID:
+          type: string
+          format: uuid
+          x-faker: faker.random.uuid()
+        Note:
+          type: string
+          x-faker: 'faker.lorem.words(faker.random.number({min: 0,  max: 5}))'
+        Priorty:
+          type: boolean
+          x-faker: faker.random.boolean()
+        RoleID:
+          type: integer
+          x-faker: 'faker.random.number({min: 1,  max: 7})'
+        ShowDate:
+          type: string
+          format: date-time
+          x-faker: 'faker.date.between(`01/01/2000`, `01/01/2021`)'
+        ShowingUpDuration:
+          type: integer
+          x-faker: 1
+        SittingTypeID:
+          type: integer
+          x-faker: 1
+        TargetUserName:
+          type: string
+          x-faker: faker.name.findName()
+        TaskID:
+          type: integer
+          format: uuid
+          x-faker: faker.random.uuid()
+        TaskName:
+          type: string
+          x-faker: faker.lorem.words(2)
+        TaskStatus:
+          type: integer
+          x-faker: 1
+        TaskType:
+          type: integer
+          x-faker: 'faker.random.number({min: 1,  max: 5})'
+        TaskTypeName:
+          type: string
+          x-faker: getTypeTask()
+        UpdatingDate:
+          type: string
+          format: date-time
+          x-faker: 'faker.date.between(`01/01/2000`, `01/01/2021`)'
+        UpdatingUser:
+          type: string
+          x-faker: faker.name.findName()
+        UseCaseID:
+          type: string
+          format: uuid
+          x-faker: faker.random.uuid()
+        UserName:
+          type: string
+          x-faker: faker.name.findName()
+    TaskTypeDTO:
+      title: TaskTypeDTO
+      type: object
+      description: Represents the task type document.
+      properties:
+        TaskTypeID:
+          type: integer
+          x-faker: faker.random.number()
+        TaskTypeName:
+          type: string
+          x-faker: faker.lorem.word()
+        EntityTypeID:
+          type: integer
+          x-faker: faker.random.number()
+    SingleIntDTO:
+      title: SingleIntDTO
+      type: object
+      description: Represents the wrapper type for the single number value
+      properties:
+        Value:
+          description: The value of the type of Number.
+          example: 0
+          type: integer
+      required:
+        - Value
+      x-examples:
+        example-1:
+          Value: 0
+    WebSubmissionTaskItemDTO:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          DTOID: 85179cc4-3188-4cc4-9a36-11a19b7e479d
+          DTOStatus: 2
+          WebSubmissionTaskID: 1
+          WebSubmissionTaskTypeID: 1
+          IsWebSubmissionTaskTypeChanged: true
+          SourceID: 1
+          CaseID: 1
+          IsCaseChanged: true
+          MotionID: 1
+          CasePleaID: 1
+          SubmissionTaskID: 1
+          PaymentLegalEntityID: 1
+          DocumentSubmissionDate: '2020-12-11T20:41:17.2575518+02:00'
+          IdentityCardNumber: sample string 3
+          LawyerOfficeLegalEntityID: 1
+          InterfaceDestinationID: 1
+          SendingSystemEntityID: sample string 4
+          DocumentID: 1
+          EmailAddress: sample string 5
+          WebSubmissionTaskStatusID: 1
+          RejectingDocumentReasonID: 1
+          RejectingDocumentComment: sample string 6
+          UpdateDate: '2020-12-11T20:41:17.2585541+02:00'
+          UpdateUser: sample string 7
+          IsTreated: true
+          NoticeOfOmissionRejectionDocumentID: 1
+          OriginalSubmittedDocumentID: 1
+          DestinationTargetUserRelatedToSubmission: sample string 8
+          IsQuickSubmissionOnWebSite: true
+      properties:
+        DTOID:
+          type: string
+          minLength: 1
+          format: uuid
+        DTOStatus:
+          type: number
+        WebSubmissionTaskID:
+          type: number
+        WebSubmissionTaskTypeID:
+          type: number
+        IsWebSubmissionTaskTypeChanged:
+          type: boolean
+        SourceID:
+          type: number
+        CaseID:
+          type: number
+        IsCaseChanged:
+          type: boolean
+        MotionID:
+          type: number
+        CasePleaID:
+          type: number
+        SubmissionTaskID:
+          type: number
+        PaymentLegalEntityID:
+          type: number
+        DocumentSubmissionDate:
+          type: string
+          minLength: 1
+          format: date-time
+        IdentityCardNumber:
+          type: string
+          minLength: 1
+        LawyerOfficeLegalEntityID:
+          type: number
+        InterfaceDestinationID:
+          type: number
+        SendingSystemEntityID:
+          type: string
+          minLength: 1
+        DocumentID:
+          type: number
+        EmailAddress:
+          type: string
+          minLength: 1
+        WebSubmissionTaskStatusID:
+          type: number
+        RejectingDocumentReasonID:
+          type: number
+        RejectingDocumentComment:
+          type: string
+          minLength: 1
+        UpdateDate:
+          type: string
+          minLength: 1
+          format: date-time
+        UpdateUser:
+          type: string
+          minLength: 1
+        IsTreated:
+          type: boolean
+        NoticeOfOmissionRejectionDocumentID:
+          type: number
+        OriginalSubmittedDocumentID:
+          type: number
+        DestinationTargetUserRelatedToSubmission:
+          type: string
+          minLength: 1
+        IsQuickSubmissionOnWebSite:
+          type: boolean
+      required:
+        - DTOID
+        - DTOStatus
+        - WebSubmissionTaskID
+        - WebSubmissionTaskTypeID
+        - IsWebSubmissionTaskTypeChanged
+        - SourceID
+        - CaseID
+        - IsCaseChanged
+        - MotionID
+        - CasePleaID
+        - SubmissionTaskID
+        - PaymentLegalEntityID
+        - DocumentSubmissionDate
+        - IdentityCardNumber
+        - LawyerOfficeLegalEntityID
+        - InterfaceDestinationID
+        - SendingSystemEntityID
+        - DocumentID
+        - EmailAddress
+        - WebSubmissionTaskStatusID
+        - RejectingDocumentReasonID
+        - RejectingDocumentComment
+        - UpdateDate
+        - UpdateUser
+        - IsTreated
+        - NoticeOfOmissionRejectionDocumentID
+        - OriginalSubmittedDocumentID
+        - DestinationTargetUserRelatedToSubmission
+        - IsQuickSubmissionOnWebSite
+    WebSubmissionTaskExternalCaseDTO:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          DTOID: d051becb-81be-4503-88d9-1ae97e26e5d6
+          DTOStatus: 2
+          WebSubmissionTaskExternalCaseID: 1
+          WebSubmissionTaskID: 1
+          ExternalCaseNumber: sample string 3
+          ExternalCaseTypeID: 1
+      properties:
+        DTOID:
+          type: string
+          minLength: 1
+          format: uuid
+        DTOStatus:
+          type: number
+        WebSubmissionTaskExternalCaseID:
+          type: number
+        WebSubmissionTaskID:
+          type: number
+        ExternalCaseNumber:
+          type: string
+          minLength: 1
+        ExternalCaseTypeID:
+          type: number
+      required:
+        - DTOID
+        - DTOStatus
+        - WebSubmissionTaskExternalCaseID
+        - WebSubmissionTaskID
+        - ExternalCaseNumber
+        - ExternalCaseTypeID
+    WebSubmissionTaskHistoryDTO:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          DTOID: b8201107-2f86-464e-83f1-4cc5dbbd1c81
+          DTOStatus: 2
+          WebSubmissionTaskHistoryID: 1
+          WebSubmissionTaskID: 1
+          WebSubmissionTaskStatusID: 1
+          RejectingDocumentReasonID: 1
+          ListOfOmissionReasonDesc: sample string 3
+          RejectingDocumentComment: sample string 4
+          UpdateDate: '2020-12-11T20:41:17.2605542+02:00'
+          UpdateUser: sample string 5
+          DocumentID: 1
+          NoticeOfOmissionRejectionDocumentID: 1
+      properties:
+        DTOID:
+          type: string
+          minLength: 1
+          format: uuid
+        DTOStatus:
+          type: number
+        WebSubmissionTaskHistoryID:
+          type: number
+        WebSubmissionTaskID:
+          type: number
+        WebSubmissionTaskStatusID:
+          type: number
+        RejectingDocumentReasonID:
+          type: number
+        ListOfOmissionReasonDesc:
+          type: string
+          minLength: 1
+        RejectingDocumentComment:
+          type: string
+          minLength: 1
+        UpdateDate:
+          type: string
+          minLength: 1
+          format: date-time
+        UpdateUser:
+          type: string
+          minLength: 1
+        DocumentID:
+          type: number
+        NoticeOfOmissionRejectionDocumentID:
+          type: number
+      required:
+        - DTOID
+        - DTOStatus
+        - WebSubmissionTaskHistoryID
+        - WebSubmissionTaskID
+        - WebSubmissionTaskStatusID
+        - RejectingDocumentReasonID
+        - ListOfOmissionReasonDesc
+        - RejectingDocumentComment
+        - UpdateDate
+        - UpdateUser
+        - DocumentID
+        - NoticeOfOmissionRejectionDocumentID
+    WebSubmissionTaskDataDTO:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          DTOID: 61693832-1636-40c6-80e1-8c104d4a2a00
+          DTOStatus: 2
+          WebSubmissionTaskDataID: 1
+          WebSubmissionTaskID: 1
+          WebSubmissionData: sample string 3
+      properties:
+        DTOID:
+          type: string
+          minLength: 1
+          format: uuid
+        DTOStatus:
+          type: number
+        WebSubmissionTaskDataID:
+          type: number
+        WebSubmissionTaskID:
+          type: number
+        WebSubmissionData:
+          type: string
+          minLength: 1
+      required:
+        - DTOID
+        - DTOStatus
+        - WebSubmissionTaskDataID
+        - WebSubmissionTaskID
+        - WebSubmissionData
+    WebSubmissionTaskOmissionReasonDTO:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          DTOID: 70828e79-942b-4bf0-ac9e-4eb9c87b98c0
+          DTOStatus: 2
+          WebSubmissionTaskOmissionReasonID: 1
+          WebSubmissionTaskID: 1
+          OmissionReasonID: 1
+      properties:
+        DTOID:
+          type: string
+          minLength: 1
+          format: uuid
+        DTOStatus:
+          type: number
+        WebSubmissionTaskOmissionReasonID:
+          type: number
+        WebSubmissionTaskID:
+          type: number
+        OmissionReasonID:
+          type: number
+      required:
+        - DTOID
+        - DTOStatus
+        - WebSubmissionTaskOmissionReasonID
+        - WebSubmissionTaskID
+        - OmissionReasonID
+    WebSubmissionTaskCaseDTO:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          DTOID: 083435a0-4501-422b-8576-2f1552981bf8
+          DTOStatus: 2
+          WebSubmissionTaskCaseID: 1
+          WebSubmissionTaskID: 1
+          CourtID: 1
+          ProceedingID: 1
+          CaseTypeID: 1
+          CaseInterestID: 1
+          PublicationProhibitioRequestDocumentID: 1
+      properties:
+        DTOID:
+          type: string
+          minLength: 1
+          format: uuid
+        DTOStatus:
+          type: number
+        WebSubmissionTaskCaseID:
+          type: number
+        WebSubmissionTaskID:
+          type: number
+        CourtID:
+          type: number
+        ProceedingID:
+          type: number
+        CaseTypeID:
+          type: number
+        CaseInterestID:
+          type: number
+        PublicationProhibitioRequestDocumentID:
+          type: number
+      required:
+        - DTOID
+        - DTOStatus
+        - WebSubmissionTaskCaseID
+        - WebSubmissionTaskID
+        - CourtID
+        - ProceedingID
+        - CaseTypeID
+        - CaseInterestID
+        - PublicationProhibitioRequestDocumentID
+    WebSubmissionTaskMotionDTO:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          DTOID: aa28ed8c-c193-4670-9974-a3f4aed26814
+          DTOStatus: 2
+          WebSubmissionTaskMotionID: 1
+          WebSubmissionTaskID: 1
+          MotionTypeID: 1
+      properties:
+        DTOID:
+          type: string
+          minLength: 1
+          format: uuid
+        DTOStatus:
+          type: number
+        WebSubmissionTaskMotionID:
+          type: number
+        WebSubmissionTaskID:
+          type: number
+        MotionTypeID:
+          type: number
+      required:
+        - DTOID
+        - DTOStatus
+        - WebSubmissionTaskMotionID
+        - WebSubmissionTaskID
+        - MotionTypeID
+    WebSubmissionTaskPleaDTO:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          DTOID: 9345d9ae-de30-4c93-a074-489ce407f270
+          DTOStatus: 2
+          WebSubmissionTaskPleaID: 1
+          WebSubmissionTaskID: 1
+          PleaTypeID: 1
+      properties:
+        DTOID:
+          type: string
+          minLength: 1
+          format: uuid
+        DTOStatus:
+          type: number
+        WebSubmissionTaskPleaID:
+          type: number
+        WebSubmissionTaskID:
+          type: number
+        PleaTypeID:
+          type: number
+      required:
+        - DTOID
+        - DTOStatus
+        - WebSubmissionTaskPleaID
+        - WebSubmissionTaskID
+        - PleaTypeID
+    WebSubmissionTaskExemptionDTO:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          DTOID: a762795b-c95b-444e-968d-1f06f905f548
+          DTOStatus: 2
+          WebSubmissionTaskExemptionID: 1
+          WebSubmissionTaskID: 1
+          IsFeeExemptionExists: true
+          IsFeeExemptionRequest: true
+          IsEligibilityForExemptionApproved: true
+          IsGuaranteeExemptionRequest: true
+          FeeExemptionRequestDocumentID: 1
+      properties:
+        DTOID:
+          type: string
+          minLength: 1
+          format: uuid
+        DTOStatus:
+          type: number
+        WebSubmissionTaskExemptionID:
+          type: number
+        WebSubmissionTaskID:
+          type: number
+        IsFeeExemptionExists:
+          type: boolean
+        IsFeeExemptionRequest:
+          type: boolean
+        IsEligibilityForExemptionApproved:
+          type: boolean
+        IsGuaranteeExemptionRequest:
+          type: boolean
+        FeeExemptionRequestDocumentID:
+          type: number
+      required:
+        - DTOID
+        - DTOStatus
+        - WebSubmissionTaskExemptionID
+        - WebSubmissionTaskID
+        - IsFeeExemptionExists
+        - IsFeeExemptionRequest
+        - IsEligibilityForExemptionApproved
+        - IsGuaranteeExemptionRequest
+        - FeeExemptionRequestDocumentID
+    WebSubmissionTaskStatisticalGeneralDTO:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          DTOID: 0e027319-2b05-4ea0-b057-81cf7bb833e5
+          DTOStatus: 2
+          WebSubmissionTaskStatisticalGeneralID: 1
+          WebSubmissionTaskID: 1
+          DurationOfSecretariatTreatmentInMin: 1
+          CalculationDateOfTreatmentTime: '2020-12-11T20:41:17.2675609+02:00'
+      properties:
+        DTOID:
+          type: string
+          minLength: 1
+          format: uuid
+        DTOStatus:
+          type: number
+        WebSubmissionTaskStatisticalGeneralID:
+          type: number
+        WebSubmissionTaskID:
+          type: number
+        DurationOfSecretariatTreatmentInMin:
+          type: number
+        CalculationDateOfTreatmentTime:
+          type: string
+          minLength: 1
+          format: date-time
+      required:
+        - DTOID
+        - DTOStatus
+        - WebSubmissionTaskStatisticalGeneralID
+        - WebSubmissionTaskID
+        - DurationOfSecretariatTreatmentInMin
+        - CalculationDateOfTreatmentTime
+    WebSubmissionTaskDTO:
+      title: WebSubmissionTaskDTO
+      type: object
+      properties:
+        WebSubmissionTask:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebSubmissionTaskItemDTO'
+        WebSubmissionTaskExternalCase:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebSubmissionTaskExternalCaseDTO'
+        WebSubmissionTaskHistory:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebSubmissionTaskHistoryDTO'
+        WebSubmissionTaskData:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebSubmissionTaskDataDTO'
+        WebSubmissionTaskOmissionReason:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebSubmissionTaskOmissionReasonDTO'
+        WebSubmissionTaskCase:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebSubmissionTaskCaseDTO'
+        WebSubmissionTaskMotion:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebSubmissionTaskMotionDTO'
+        WebSubmissionTaskPlea:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebSubmissionTaskPleaDTO'
+        WebSubmissionTaskExemption:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebSubmissionTaskExemptionDTO'
+        WebSubmissionTaskStatisticalGeneral:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebSubmissionTaskStatisticalGeneralDTO'
+      x-examples:
+        example-1:
+          WebSubmissionTask:
+            - DTOID: 85179cc4-3188-4cc4-9a36-11a19b7e479d
+              DTOStatus: 2
+              WebSubmissionTaskID: 1
+              WebSubmissionTaskTypeID: 1
+              IsWebSubmissionTaskTypeChanged: true
+              SourceID: 1
+              CaseID: 1
+              IsCaseChanged: true
+              MotionID: 1
+              CasePleaID: 1
+              SubmissionTaskID: 1
+              PaymentLegalEntityID: 1
+              DocumentSubmissionDate: '2020-12-11T20:41:17.2575518+02:00'
+              IdentityCardNumber: sample string 3
+              LawyerOfficeLegalEntityID: 1
+              InterfaceDestinationID: 1
+              SendingSystemEntityID: sample string 4
+              DocumentID: 1
+              EmailAddress: sample string 5
+              WebSubmissionTaskStatusID: 1
+              RejectingDocumentReasonID: 1
+              RejectingDocumentComment: sample string 6
+              UpdateDate: '2020-12-11T20:41:17.2585541+02:00'
+              UpdateUser: sample string 7
+              IsTreated: true
+              NoticeOfOmissionRejectionDocumentID: 1
+              OriginalSubmittedDocumentID: 1
+              DestinationTargetUserRelatedToSubmission: sample string 8
+              IsQuickSubmissionOnWebSite: true
+            - DTOID: 85179cc4-3188-4cc4-9a36-11a19b7e479d
+              DTOStatus: 2
+              WebSubmissionTaskID: 1
+              WebSubmissionTaskTypeID: 1
+              IsWebSubmissionTaskTypeChanged: true
+              SourceID: 1
+              CaseID: 1
+              IsCaseChanged: true
+              MotionID: 1
+              CasePleaID: 1
+              SubmissionTaskID: 1
+              PaymentLegalEntityID: 1
+              DocumentSubmissionDate: '2020-12-11T20:41:17.2575518+02:00'
+              IdentityCardNumber: sample string 3
+              LawyerOfficeLegalEntityID: 1
+              InterfaceDestinationID: 1
+              SendingSystemEntityID: sample string 4
+              DocumentID: 1
+              EmailAddress: sample string 5
+              WebSubmissionTaskStatusID: 1
+              RejectingDocumentReasonID: 1
+              RejectingDocumentComment: sample string 6
+              UpdateDate: '2020-12-11T20:41:17.2585541+02:00'
+              UpdateUser: sample string 7
+              IsTreated: true
+              NoticeOfOmissionRejectionDocumentID: 1
+              OriginalSubmittedDocumentID: 1
+              DestinationTargetUserRelatedToSubmission: sample string 8
+              IsQuickSubmissionOnWebSite: true
+          WebSubmissionTaskExternalCase:
+            - DTOID: d051becb-81be-4503-88d9-1ae97e26e5d6
+              DTOStatus: 2
+              WebSubmissionTaskExternalCaseID: 1
+              WebSubmissionTaskID: 1
+              ExternalCaseNumber: sample string 3
+              ExternalCaseTypeID: 1
+            - DTOID: d051becb-81be-4503-88d9-1ae97e26e5d6
+              DTOStatus: 2
+              WebSubmissionTaskExternalCaseID: 1
+              WebSubmissionTaskID: 1
+              ExternalCaseNumber: sample string 3
+              ExternalCaseTypeID: 1
+          WebSubmissionTaskHistory:
+            - DTOID: b8201107-2f86-464e-83f1-4cc5dbbd1c81
+              DTOStatus: 2
+              WebSubmissionTaskHistoryID: 1
+              WebSubmissionTaskID: 1
+              WebSubmissionTaskStatusID: 1
+              RejectingDocumentReasonID: 1
+              ListOfOmissionReasonDesc: sample string 3
+              RejectingDocumentComment: sample string 4
+              UpdateDate: '2020-12-11T20:41:17.2605542+02:00'
+              UpdateUser: sample string 5
+              DocumentID: 1
+              NoticeOfOmissionRejectionDocumentID: 1
+            - DTOID: b8201107-2f86-464e-83f1-4cc5dbbd1c81
+              DTOStatus: 2
+              WebSubmissionTaskHistoryID: 1
+              WebSubmissionTaskID: 1
+              WebSubmissionTaskStatusID: 1
+              RejectingDocumentReasonID: 1
+              ListOfOmissionReasonDesc: sample string 3
+              RejectingDocumentComment: sample string 4
+              UpdateDate: '2020-12-11T20:41:17.2605542+02:00'
+              UpdateUser: sample string 5
+              DocumentID: 1
+              NoticeOfOmissionRejectionDocumentID: 1
+          WebSubmissionTaskData:
+            - DTOID: 61693832-1636-40c6-80e1-8c104d4a2a00
+              DTOStatus: 2
+              WebSubmissionTaskDataID: 1
+              WebSubmissionTaskID: 1
+              WebSubmissionData: sample string 3
+            - DTOID: 61693832-1636-40c6-80e1-8c104d4a2a00
+              DTOStatus: 2
+              WebSubmissionTaskDataID: 1
+              WebSubmissionTaskID: 1
+              WebSubmissionData: sample string 3
+          WebSubmissionTaskOmissionReason:
+            - DTOID: 70828e79-942b-4bf0-ac9e-4eb9c87b98c0
+              DTOStatus: 2
+              WebSubmissionTaskOmissionReasonID: 1
+              WebSubmissionTaskID: 1
+              OmissionReasonID: 1
+            - DTOID: 70828e79-942b-4bf0-ac9e-4eb9c87b98c0
+              DTOStatus: 2
+              WebSubmissionTaskOmissionReasonID: 1
+              WebSubmissionTaskID: 1
+              OmissionReasonID: 1
+          WebSubmissionTaskCase:
+            - DTOID: 083435a0-4501-422b-8576-2f1552981bf8
+              DTOStatus: 2
+              WebSubmissionTaskCaseID: 1
+              WebSubmissionTaskID: 1
+              CourtID: 1
+              ProceedingID: 1
+              CaseTypeID: 1
+              CaseInterestID: 1
+              PublicationProhibitioRequestDocumentID: 1
+            - DTOID: 083435a0-4501-422b-8576-2f1552981bf8
+              DTOStatus: 2
+              WebSubmissionTaskCaseID: 1
+              WebSubmissionTaskID: 1
+              CourtID: 1
+              ProceedingID: 1
+              CaseTypeID: 1
+              CaseInterestID: 1
+              PublicationProhibitioRequestDocumentID: 1
+          WebSubmissionTaskMotion:
+            - DTOID: aa28ed8c-c193-4670-9974-a3f4aed26814
+              DTOStatus: 2
+              WebSubmissionTaskMotionID: 1
+              WebSubmissionTaskID: 1
+              MotionTypeID: 1
+            - DTOID: aa28ed8c-c193-4670-9974-a3f4aed26814
+              DTOStatus: 2
+              WebSubmissionTaskMotionID: 1
+              WebSubmissionTaskID: 1
+              MotionTypeID: 1
+          WebSubmissionTaskPlea:
+            - DTOID: 9345d9ae-de30-4c93-a074-489ce407f270
+              DTOStatus: 2
+              WebSubmissionTaskPleaID: 1
+              WebSubmissionTaskID: 1
+              PleaTypeID: 1
+            - DTOID: 9345d9ae-de30-4c93-a074-489ce407f270
+              DTOStatus: 2
+              WebSubmissionTaskPleaID: 1
+              WebSubmissionTaskID: 1
+              PleaTypeID: 1
+          WebSubmissionTaskExemption:
+            - DTOID: a762795b-c95b-444e-968d-1f06f905f548
+              DTOStatus: 2
+              WebSubmissionTaskExemptionID: 1
+              WebSubmissionTaskID: 1
+              IsFeeExemptionExists: true
+              IsFeeExemptionRequest: true
+              IsEligibilityForExemptionApproved: true
+              IsGuaranteeExemptionRequest: true
+              FeeExemptionRequestDocumentID: 1
+            - DTOID: a762795b-c95b-444e-968d-1f06f905f548
+              DTOStatus: 2
+              WebSubmissionTaskExemptionID: 1
+              WebSubmissionTaskID: 1
+              IsFeeExemptionExists: true
+              IsFeeExemptionRequest: true
+              IsEligibilityForExemptionApproved: true
+              IsGuaranteeExemptionRequest: true
+              FeeExemptionRequestDocumentID: 1
+          WebSubmissionTaskStatisticalGeneral:
+            - DTOID: 0e027319-2b05-4ea0-b057-81cf7bb833e5
+              DTOStatus: 2
+              WebSubmissionTaskStatisticalGeneralID: 1
+              WebSubmissionTaskID: 1
+              DurationOfSecretariatTreatmentInMin: 1
+              CalculationDateOfTreatmentTime: '2020-12-11T20:41:17.2675609+02:00'
+            - DTOID: 0e027319-2b05-4ea0-b057-81cf7bb833e5
+              DTOStatus: 2
+              WebSubmissionTaskStatisticalGeneralID: 1
+              WebSubmissionTaskID: 1
+              DurationOfSecretariatTreatmentInMin: 1
+              CalculationDateOfTreatmentTime: '2020-12-11T20:41:17.2675609+02:00'
+    DocumentsSubmittedRemotelyItemDTO:
+      title: DocumentsSubmittedRemotelyItemDTO
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          DTOID: 26977944-bdc5-4a27-8cb1-3a111b5ef498
+          DTOStatus: 2
+          WebSubmissionTaskID: 1
+          DocumentSubmissionDate: '2020-12-11T20:42:11.8319025+02:00'
+          CaseID: 1
+          CaseDisplayIdentifier: sample string 3
+          WebSubmissionTaskTypeID: 1
+          WebSubmissionTaskTypeDesc: sample string 4
+          SourceID: 1
+          SourceName: sample string 5
+          SendingSystemEntityID: sample string 6
+          WebSubmissionTaskStatusID: 1
+          WebSubmissionTaskStatusDesc: sample string 7
+          UpdateUser: sample string 8
+          UpdateDate: '2020-12-11T20:42:11.8328983+02:00'
+          RejectingDocumentReasonID: 1
+          RejectingDocumentOrOmissionReasonDesc: sample string 9
+          RejectingDocumentComment: sample string 10
+          DocumentID: 1
+          FileID: sample string 11
+          IsTreated: true
+          JudicialPerson: sample string 12
+          CaseTypeName: sample string 13
+          CaseTypeShortName: sample string 14
+          MotionOrDocumentOrCaseInterestTypeDesc: sample string 15
+          FutureSittingDate: '2020-12-11T20:42:11.8339025+02:00'
+          NoticeOfOmissionRejectionDocumentID: 1
+          NoticeOfOmissionRejectionFileID: sample string 16
+          IsCaseChanged: true
+          DestinationTargetUserRelatedToSubmission: sample string 17
+          IsQuickSubmissionOnWebSite: true
+          PresentationDate: '2020-12-11T20:42:11.8339025+02:00'
+          EmailAddress: sample string 18
+      properties:
+        DTOID:
+          type: string
+          minLength: 1
+          format: uuid
+        DTOStatus:
+          type: number
+        WebSubmissionTaskID:
+          type: number
+        DocumentSubmissionDate:
+          type: string
+          minLength: 1
+          format: date-time
+        CaseID:
+          type: number
+        CaseDisplayIdentifier:
+          type: string
+          minLength: 1
+        WebSubmissionTaskTypeID:
+          type: number
+        WebSubmissionTaskTypeDesc:
+          type: string
+          minLength: 1
+        SourceID:
+          type: number
+        SourceName:
+          type: string
+          minLength: 1
+        SendingSystemEntityID:
+          type: string
+          minLength: 1
+        WebSubmissionTaskStatusID:
+          type: number
+        WebSubmissionTaskStatusDesc:
+          type: string
+          minLength: 1
+        UpdateUser:
+          type: string
+          minLength: 1
+        UpdateDate:
+          type: string
+          minLength: 1
+          format: date-time
+        RejectingDocumentReasonID:
+          type: number
+        RejectingDocumentOrOmissionReasonDesc:
+          type: string
+          minLength: 1
+        RejectingDocumentComment:
+          type: string
+          minLength: 1
+        DocumentID:
+          type: number
+        FileID:
+          type: string
+          minLength: 1
+        IsTreated:
+          type: boolean
+        JudicialPerson:
+          type: string
+          minLength: 1
+        CaseTypeName:
+          type: string
+          minLength: 1
+        CaseTypeShortName:
+          type: string
+          minLength: 1
+        MotionOrDocumentOrCaseInterestTypeDesc:
+          type: string
+          minLength: 1
+        FutureSittingDate:
+          type: string
+          minLength: 1
+          format: date-time
+        NoticeOfOmissionRejectionDocumentID:
+          type: number
+        NoticeOfOmissionRejectionFileID:
+          type: string
+          minLength: 1
+        IsCaseChanged:
+          type: boolean
+        DestinationTargetUserRelatedToSubmission:
+          type: string
+          minLength: 1
+        IsQuickSubmissionOnWebSite:
+          type: boolean
+        PresentationDate:
+          type: string
+          minLength: 1
+          format: date-time
+        EmailAddress:
+          type: string
+          minLength: 1
+      required:
+        - DTOID
+        - DTOStatus
+        - WebSubmissionTaskID
+        - DocumentSubmissionDate
+        - CaseID
+        - CaseDisplayIdentifier
+        - WebSubmissionTaskTypeID
+        - WebSubmissionTaskTypeDesc
+        - SourceID
+        - SourceName
+        - SendingSystemEntityID
+        - WebSubmissionTaskStatusID
+        - WebSubmissionTaskStatusDesc
+        - UpdateUser
+        - UpdateDate
+        - RejectingDocumentReasonID
+        - RejectingDocumentOrOmissionReasonDesc
+        - RejectingDocumentComment
+        - DocumentID
+        - FileID
+        - IsTreated
+        - JudicialPerson
+        - CaseTypeName
+        - CaseTypeShortName
+        - MotionOrDocumentOrCaseInterestTypeDesc
+        - FutureSittingDate
+        - NoticeOfOmissionRejectionDocumentID
+        - NoticeOfOmissionRejectionFileID
+        - IsCaseChanged
+        - DestinationTargetUserRelatedToSubmission
+        - IsQuickSubmissionOnWebSite
+        - PresentationDate
+        - EmailAddress
+    DecisionDTO:
+      title: DecisionDTO
+      type: object
+      x-examples:
+        example-1:
+          Decision:
+            - DTOID: 8cec9849-4a0c-4ed7-83ea-0616c049b1e2
+              DTOStatus: 2
+              DecisionID: 1
+              DecisionNumber: 1
+              DecisionName: sample string 3
+              DecisionStatusID: 1
+              DecisionStatusChangeDate: '2020-12-11T20:44:01.0389506+02:00'
+              DecisionSignatureDate: '2020-12-11T20:44:01.0389506+02:00'
+              DecisionSignatureUserID: sample string 4
+              DecisionCreateDate: '2020-12-11T20:44:01.0389506+02:00'
+              DecisionChangeDate: '2020-12-11T20:44:01.0399454+02:00'
+              DecisionChangeUserID: sample string 5
+              DecisionDesc: sample string 6
+              IsChosenDecision: true
+              IsDecisionImplementationTask: true
+              IsDecisionInProtocol: true
+              DecisionTypeID: 1
+              DecisionText: sample string 7
+              IsOnlyOneParty: true
+              IsCanceledDecision: true
+              DecisionLinkID: 1
+              DecisionLinkTypeID: 1
+              DocumentID: 1
+              PrivilegeID: 1
+              IsDecisionConverted: true
+              SignatureUserTypeID: 1
+              IsOpenedToSecondSide: true
+              IsDecisionAppeled: true
+              DecisionWriterID: sample string 8
+              IsInstruction: true
+              PreviousCaseID: sample string 9
+              IsNeedAllSignatures: true
+              DecisionAttributeID: 1
+              DecisionCreationUserID: sample string 10
+              DecisionLinkName: sample string 11
+              DecisionLinkCaseID: 1
+              DecisionDisplayName: sample string 12
+              IsScanned: true
+              DecisionSignatureUserName: sample string 13
+              ChangePrivilegeUserID: sample string 14
+              PublishInWebUserID: sample string 15
+              NotificationTypeID: 1
+              NotificationAuthorizeUserID: sample string 16
+              DecisionReleaseDate: '2020-12-11T20:44:01.0419504+02:00'
+              IsDecisionInNote: true
+              IsDecisionUrgency: true
+              IsTechnicalCancel: true
+              IsPublishSmallCensorVersion: true
+            - DTOID: 8cec9849-4a0c-4ed7-83ea-0616c049b1e2
+              DTOStatus: 2
+              DecisionID: 1
+              DecisionNumber: 1
+              DecisionName: sample string 3
+              DecisionStatusID: 1
+              DecisionStatusChangeDate: '2020-12-11T20:44:01.0389506+02:00'
+              DecisionSignatureDate: '2020-12-11T20:44:01.0389506+02:00'
+              DecisionSignatureUserID: sample string 4
+              DecisionCreateDate: '2020-12-11T20:44:01.0389506+02:00'
+              DecisionChangeDate: '2020-12-11T20:44:01.0399454+02:00'
+              DecisionChangeUserID: sample string 5
+              DecisionDesc: sample string 6
+              IsChosenDecision: true
+              IsDecisionImplementationTask: true
+              IsDecisionInProtocol: true
+              DecisionTypeID: 1
+              DecisionText: sample string 7
+              IsOnlyOneParty: true
+              IsCanceledDecision: true
+              DecisionLinkID: 1
+              DecisionLinkTypeID: 1
+              DocumentID: 1
+              PrivilegeID: 1
+              IsDecisionConverted: true
+              SignatureUserTypeID: 1
+              IsOpenedToSecondSide: true
+              IsDecisionAppeled: true
+              DecisionWriterID: sample string 8
+              IsInstruction: true
+              PreviousCaseID: sample string 9
+              IsNeedAllSignatures: true
+              DecisionAttributeID: 1
+              DecisionCreationUserID: sample string 10
+              DecisionLinkName: sample string 11
+              DecisionLinkCaseID: 1
+              DecisionDisplayName: sample string 12
+              IsScanned: true
+              DecisionSignatureUserName: sample string 13
+              ChangePrivilegeUserID: sample string 14
+              PublishInWebUserID: sample string 15
+              NotificationTypeID: 1
+              NotificationAuthorizeUserID: sample string 16
+              DecisionReleaseDate: '2020-12-11T20:44:01.0419504+02:00'
+              IsDecisionInNote: true
+              IsDecisionUrgency: true
+              IsTechnicalCancel: true
+              IsPublishSmallCensorVersion: true
+          DecisionCase:
+            - DTOID: 8d0d9cd4-1c39-459f-8c32-db58feb1be73
+              DTOStatus: 2
+              DecisionID: 1
+              CaseID: 1
+              IsOriginal: true
+              IsDeleted: true
+              CaseLinkTypeID: 1
+              CaseName: sample string 3
+              CaseDisplayIdentifier: sample string 4
+            - DTOID: 8d0d9cd4-1c39-459f-8c32-db58feb1be73
+              DTOStatus: 2
+              DecisionID: 1
+              CaseID: 1
+              IsOriginal: true
+              IsDeleted: true
+              CaseLinkTypeID: 1
+              CaseName: sample string 3
+              CaseDisplayIdentifier: sample string 4
+          DecisionMotion:
+            - DTOID: 8170e012-347f-4c4a-a573-33abb0b9e342
+              DTOStatus: 2
+              DecisionID: 1
+              MotionID: 1
+              DecisionResultID: 1
+              IsOriginalMotion: true
+              MotionName: sample string 3
+              MotionOpenDate: '2020-12-11T20:44:01.0439503+02:00'
+              CaseID: 1
+              CaseDisplayIdentifier: sample string 4
+              ProcessNumber: 1
+            - DTOID: 8170e012-347f-4c4a-a573-33abb0b9e342
+              DTOStatus: 2
+              DecisionID: 1
+              MotionID: 1
+              DecisionResultID: 1
+              IsOriginalMotion: true
+              MotionName: sample string 3
+              MotionOpenDate: '2020-12-11T20:44:01.0439503+02:00'
+              CaseID: 1
+              CaseDisplayIdentifier: sample string 4
+              ProcessNumber: 1
+          DecisionProtocol:
+            - DTOID: 42f3288b-c24e-460f-ada8-b6d4d906430f
+              DTOStatus: 2
+              DecisionID: 1
+              ProtocolID: 1
+              ProtocolEventID: 1
+            - DTOID: 42f3288b-c24e-460f-ada8-b6d4d906430f
+              DTOStatus: 2
+              DecisionID: 1
+              ProtocolID: 1
+              ProtocolEventID: 1
+          DecisionJudgePanel:
+            - DTOID: 4beb4d8e-73b4-4b43-811a-0d0089eebfad
+              DTOStatus: 2
+              DecisionID: 1
+              JudgeID: sample string 3
+              DocumentSendDate: '2020-12-11T20:44:01.0459507+02:00'
+              FinalDate: '2020-12-11T20:44:01.0459507+02:00'
+              SignatureDate: '2020-12-11T20:44:01.0459507+02:00'
+              DocumentID: 1
+              DecisionOpinionDate: '2020-12-11T20:44:01.0459507+02:00'
+              WriterViewedDraftDate: '2020-12-11T20:44:01.0459507+02:00'
+              IsNeedAllSignatures: true
+              DocumentIDNotes: 1
+              OrdinalNumber: 1
+            - DTOID: 4beb4d8e-73b4-4b43-811a-0d0089eebfad
+              DTOStatus: 2
+              DecisionID: 1
+              JudgeID: sample string 3
+              DocumentSendDate: '2020-12-11T20:44:01.0459507+02:00'
+              FinalDate: '2020-12-11T20:44:01.0459507+02:00'
+              SignatureDate: '2020-12-11T20:44:01.0459507+02:00'
+              DocumentID: 1
+              DecisionOpinionDate: '2020-12-11T20:44:01.0459507+02:00'
+              WriterViewedDraftDate: '2020-12-11T20:44:01.0459507+02:00'
+              IsNeedAllSignatures: true
+              DocumentIDNotes: 1
+              OrdinalNumber: 1
+          Attachments:
+            - DTOID: fca4969f-95a6-4806-a761-8005521efbe9
+              DTOStatus: 2
+              DocumentID: 1
+              DocumentStatusChangeDate: '2020-12-11T20:44:01.0469502+02:00'
+              DocumentDesc: sample string 3
+              DocumentMainID: 1
+            - DTOID: fca4969f-95a6-4806-a761-8005521efbe9
+              DTOStatus: 2
+              DocumentID: 1
+              DocumentStatusChangeDate: '2020-12-11T20:44:01.0469502+02:00'
+              DocumentDesc: sample string 3
+              DocumentMainID: 1
+      properties:
+        Decision:
+          type: array
+          items:
+            $ref: '#/components/schemas/DecisionItemDTO'
+        DecisionCase:
+          type: array
+          items:
+            $ref: '#/components/schemas/DecisionCaseDTO'
+        DecisionMotion:
+          type: array
+          items:
+            $ref: '#/components/schemas/DecisionMotionDTO'
+        DecisionProtocol:
+          type: array
+          items:
+            $ref: '#/components/schemas/DecisionProtocolDTO'
+        DecisionJudgePanel:
+          type: array
+          items:
+            $ref: '#/components/schemas/DecisionJudgePanelDTO'
+        Attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachmentsDTO'
+    DecisionItemDTO:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          DTOID: 8cec9849-4a0c-4ed7-83ea-0616c049b1e2
+          DTOStatus: 2
+          DecisionID: 1
+          DecisionNumber: 1
+          DecisionName: sample string 3
+          DecisionStatusID: 1
+          DecisionStatusChangeDate: '2020-12-11T20:44:01.0389506+02:00'
+          DecisionSignatureDate: '2020-12-11T20:44:01.0389506+02:00'
+          DecisionSignatureUserID: sample string 4
+          DecisionCreateDate: '2020-12-11T20:44:01.0389506+02:00'
+          DecisionChangeDate: '2020-12-11T20:44:01.0399454+02:00'
+          DecisionChangeUserID: sample string 5
+          DecisionDesc: sample string 6
+          IsChosenDecision: true
+          IsDecisionImplementationTask: true
+          IsDecisionInProtocol: true
+          DecisionTypeID: 1
+          DecisionText: sample string 7
+          IsOnlyOneParty: true
+          IsCanceledDecision: true
+          DecisionLinkID: 1
+          DecisionLinkTypeID: 1
+          DocumentID: 1
+          PrivilegeID: 1
+          IsDecisionConverted: true
+          SignatureUserTypeID: 1
+          IsOpenedToSecondSide: true
+          IsDecisionAppeled: true
+          DecisionWriterID: sample string 8
+          IsInstruction: true
+          PreviousCaseID: sample string 9
+          IsNeedAllSignatures: true
+          DecisionAttributeID: 1
+          DecisionCreationUserID: sample string 10
+          DecisionLinkName: sample string 11
+          DecisionLinkCaseID: 1
+          DecisionDisplayName: sample string 12
+          IsScanned: true
+          DecisionSignatureUserName: sample string 13
+          ChangePrivilegeUserID: sample string 14
+          PublishInWebUserID: sample string 15
+          NotificationTypeID: 1
+          NotificationAuthorizeUserID: sample string 16
+          DecisionReleaseDate: '2020-12-11T20:44:01.0419504+02:00'
+          IsDecisionInNote: true
+          IsDecisionUrgency: true
+          IsTechnicalCancel: true
+          IsPublishSmallCensorVersion: true
+      properties:
+        DTOID:
+          type: string
+          minLength: 1
+          format: uuid
+        DTOStatus:
+          type: number
+        DecisionID:
+          type: number
+        DecisionNumber:
+          type: number
+        DecisionName:
+          type: string
+          minLength: 1
+        DecisionStatusID:
+          type: number
+        DecisionStatusChangeDate:
+          type: string
+          minLength: 1
+        DecisionSignatureDate:
+          type: string
+          minLength: 1
+        DecisionSignatureUserID:
+          type: string
+          minLength: 1
+        DecisionCreateDate:
+          type: string
+          minLength: 1
+        DecisionChangeDate:
+          type: string
+          minLength: 1
+        DecisionChangeUserID:
+          type: string
+          minLength: 1
+        DecisionDesc:
+          type: string
+          minLength: 1
+        IsChosenDecision:
+          type: boolean
+        IsDecisionImplementationTask:
+          type: boolean
+        IsDecisionInProtocol:
+          type: boolean
+        DecisionTypeID:
+          type: number
+        DecisionText:
+          type: string
+          minLength: 1
+        IsOnlyOneParty:
+          type: boolean
+        IsCanceledDecision:
+          type: boolean
+        DecisionLinkID:
+          type: number
+        DecisionLinkTypeID:
+          type: number
+        DocumentID:
+          type: number
+        PrivilegeID:
+          type: number
+        IsDecisionConverted:
+          type: boolean
+        SignatureUserTypeID:
+          type: number
+        IsOpenedToSecondSide:
+          type: boolean
+        IsDecisionAppeled:
+          type: boolean
+        DecisionWriterID:
+          type: string
+          minLength: 1
+        IsInstruction:
+          type: boolean
+        PreviousCaseID:
+          type: string
+          minLength: 1
+        IsNeedAllSignatures:
+          type: boolean
+        DecisionAttributeID:
+          type: number
+        DecisionCreationUserID:
+          type: string
+          minLength: 1
+        DecisionLinkName:
+          type: string
+          minLength: 1
+        DecisionLinkCaseID:
+          type: number
+        DecisionDisplayName:
+          type: string
+          minLength: 1
+        IsScanned:
+          type: boolean
+        DecisionSignatureUserName:
+          type: string
+          minLength: 1
+        ChangePrivilegeUserID:
+          type: string
+          minLength: 1
+        PublishInWebUserID:
+          type: string
+          minLength: 1
+        NotificationTypeID:
+          type: number
+        NotificationAuthorizeUserID:
+          type: string
+          minLength: 1
+        DecisionReleaseDate:
+          type: string
+          minLength: 1
+          format: date-time
+        IsDecisionInNote:
+          type: boolean
+        IsDecisionUrgency:
+          type: boolean
+        IsTechnicalCancel:
+          type: boolean
+        IsPublishSmallCensorVersion:
+          type: boolean
+      required:
+        - DTOID
+        - DTOStatus
+        - DecisionID
+        - DecisionNumber
+        - DecisionName
+        - DecisionStatusID
+        - DecisionStatusChangeDate
+        - DecisionSignatureDate
+        - DecisionSignatureUserID
+        - DecisionCreateDate
+        - DecisionChangeDate
+        - DecisionChangeUserID
+        - DecisionDesc
+        - IsChosenDecision
+        - IsDecisionImplementationTask
+        - IsDecisionInProtocol
+        - DecisionTypeID
+        - DecisionText
+        - IsOnlyOneParty
+        - IsCanceledDecision
+        - DecisionLinkID
+        - DecisionLinkTypeID
+        - DocumentID
+        - PrivilegeID
+        - IsDecisionConverted
+        - SignatureUserTypeID
+        - IsOpenedToSecondSide
+        - IsDecisionAppeled
+        - DecisionWriterID
+        - IsInstruction
+        - PreviousCaseID
+        - IsNeedAllSignatures
+        - DecisionAttributeID
+        - DecisionCreationUserID
+        - DecisionLinkName
+        - DecisionLinkCaseID
+        - DecisionDisplayName
+        - IsScanned
+        - DecisionSignatureUserName
+        - ChangePrivilegeUserID
+        - PublishInWebUserID
+        - NotificationTypeID
+        - NotificationAuthorizeUserID
+        - DecisionReleaseDate
+        - IsDecisionInNote
+        - IsDecisionUrgency
+        - IsTechnicalCancel
+        - IsPublishSmallCensorVersion
+    DecisionCaseDTO:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          DTOID: 8d0d9cd4-1c39-459f-8c32-db58feb1be73
+          DTOStatus: 2
+          DecisionID: 1
+          CaseID: 1
+          IsOriginal: true
+          IsDeleted: true
+          CaseLinkTypeID: 1
+          CaseName: sample string 3
+          CaseDisplayIdentifier: sample string 4
+      properties:
+        DTOID:
+          type: string
+          minLength: 1
+          format: uuid
+        DTOStatus:
+          type: number
+        DecisionID:
+          type: number
+        CaseID:
+          type: number
+        IsOriginal:
+          type: boolean
+        IsDeleted:
+          type: boolean
+        CaseLinkTypeID:
+          type: number
+        CaseName:
+          type: string
+          minLength: 1
+        CaseDisplayIdentifier:
+          type: string
+          minLength: 1
+      required:
+        - DTOID
+        - DTOStatus
+        - DecisionID
+        - CaseID
+        - IsOriginal
+        - IsDeleted
+        - CaseLinkTypeID
+        - CaseName
+        - CaseDisplayIdentifier
+    DecisionMotionDTO:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          DTOID: 8170e012-347f-4c4a-a573-33abb0b9e342
+          DTOStatus: 2
+          DecisionID: 1
+          MotionID: 1
+          DecisionResultID: 1
+          IsOriginalMotion: true
+          MotionName: sample string 3
+          MotionOpenDate: '2020-12-11T20:44:01.0439503+02:00'
+          CaseID: 1
+          CaseDisplayIdentifier: sample string 4
+          ProcessNumber: 1
+      properties:
+        DTOID:
+          type: string
+          minLength: 1
+          format: uuid
+        DTOStatus:
+          type: number
+        DecisionID:
+          type: number
+        MotionID:
+          type: number
+        DecisionResultID:
+          type: number
+        IsOriginalMotion:
+          type: boolean
+        MotionName:
+          type: string
+          minLength: 1
+        MotionOpenDate:
+          type: string
+          minLength: 1
+          format: date-time
+        CaseID:
+          type: number
+        CaseDisplayIdentifier:
+          type: string
+          minLength: 1
+        ProcessNumber:
+          type: number
+      required:
+        - DTOID
+        - DTOStatus
+        - DecisionID
+        - MotionID
+        - DecisionResultID
+        - IsOriginalMotion
+        - MotionName
+        - MotionOpenDate
+        - CaseID
+        - CaseDisplayIdentifier
+        - ProcessNumber
+    DecisionProtocolDTO:
+      description: ''
+      type: object
+      properties:
+        DTOID:
+          type: string
+          minLength: 1
+          format: uuid
+        DTOStatus:
+          type: number
+        DecisionID:
+          type: number
+        ProtocolID:
+          type: number
+        ProtocolEventID:
+          type: number
+      required:
+        - DTOID
+        - DTOStatus
+        - DecisionID
+        - ProtocolID
+        - ProtocolEventID
+      x-examples:
+        example-1:
+          DTOID: 42f3288b-c24e-460f-ada8-b6d4d906430f
+          DTOStatus: 2
+          DecisionID: 1
+          ProtocolID: 1
+          ProtocolEventID: 1
+    DecisionJudgePanelDTO:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          DTOID: 4beb4d8e-73b4-4b43-811a-0d0089eebfad
+          DTOStatus: 2
+          DecisionID: 1
+          JudgeID: sample string 3
+          DocumentSendDate: '2020-12-11T20:44:01.0459507+02:00'
+          FinalDate: '2020-12-11T20:44:01.0459507+02:00'
+          SignatureDate: '2020-12-11T20:44:01.0459507+02:00'
+          DocumentID: 1
+          DecisionOpinionDate: '2020-12-11T20:44:01.0459507+02:00'
+          WriterViewedDraftDate: '2020-12-11T20:44:01.0459507+02:00'
+          IsNeedAllSignatures: true
+          DocumentIDNotes: 1
+          OrdinalNumber: 1
+      properties:
+        DTOID:
+          type: string
+          minLength: 1
+          format: uuid
+        DTOStatus:
+          type: number
+        DecisionID:
+          type: number
+        JudgeID:
+          type: string
+          minLength: 1
+        DocumentSendDate:
+          type: string
+          minLength: 1
+          format: date-time
+        FinalDate:
+          type: string
+          minLength: 1
+          format: date-time
+        SignatureDate:
+          type: string
+          minLength: 1
+          format: date-time
+        DocumentID:
+          type: number
+        DecisionOpinionDate:
+          type: string
+          minLength: 1
+          format: date-time
+        WriterViewedDraftDate:
+          type: string
+          minLength: 1
+          format: date-time
+        IsNeedAllSignatures:
+          type: boolean
+        DocumentIDNotes:
+          type: number
+        OrdinalNumber:
+          type: number
+      required:
+        - DTOID
+        - DTOStatus
+        - DecisionID
+        - JudgeID
+        - DocumentSendDate
+        - FinalDate
+        - SignatureDate
+        - DocumentID
+        - DecisionOpinionDate
+        - WriterViewedDraftDate
+        - IsNeedAllSignatures
+        - DocumentIDNotes
+        - OrdinalNumber
+    AttachmentsDTO:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          DTOID: fca4969f-95a6-4806-a761-8005521efbe9
+          DTOStatus: 2
+          DocumentID: 1
+          DocumentStatusChangeDate: '2020-12-11T20:44:01.0469502+02:00'
+          DocumentDesc: sample string 3
+          DocumentMainID: 1
+      properties:
+        DTOID:
+          type: string
+          minLength: 1
+          format: uuid
+        DTOStatus:
+          type: number
+        DocumentID:
+          type: number
+        DocumentStatusChangeDate:
+          type: string
+          minLength: 1
+          format: date-time
+        DocumentDesc:
+          type: string
+          minLength: 1
+        DocumentMainID:
+          type: number
+      required:
+        - DTOID
+        - DTOStatus
+        - DocumentID
+        - DocumentStatusChangeDate
+        - DocumentDesc
+        - DocumentMainID
+    ElectronicFolderCommentItemDTO:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          DTOID: bdb42959-f352-4d48-bbe0-af6cc38d9f3f
+          DTOStatus: 2
+          CaseId: 1
+          ElectronicFolderCommentID: 1
+          CommentDesc: sample string 3
+          CommentCreatedDate: '2020-12-22T02:27:30.099239+02:00'
+          CommentChangedDate: '2020-12-22T02:27:30.099239+02:00'
+          CommentWriterName: sample string 4
+          DisplayName: sample string 5
+          CaseDisplayName: sample string 6
+          IsCreatedInCaseUnity: true
+          IsCreatedInCaseUnityString: sample string 7
+          CaseList: sample string 8
+      properties:
+        DTOID:
+          type: string
+          minLength: 1
+          format: uuid
+        DTOStatus:
+          type: number
+        ElectronicFolderCommentID:
+          type: number
+        CommentDesc:
+          type: string
+          minLength: 1
+        CommentCreatedDate:
+          type: string
+          minLength: 1
+          format: date-time
+        CommentChangedDate:
+          type: string
+          minLength: 1
+          format: date-time
+        CommentWriterName:
+          type: string
+          minLength: 1
+        DisplayName:
+          type: string
+          minLength: 1
+        CaseDisplayName:
+          type: string
+          minLength: 1
+        IsCreatedInCaseUnity:
+          type: boolean
+        IsCreatedInCaseUnityString:
+          type: string
+          minLength: 1
+        CaseList:
+          type: string
+          minLength: 1
+        CaseId:
+          type: number
+      required:
+        - DTOID
+        - DTOStatus
+        - ElectronicFolderCommentID
+        - CommentDesc
+        - CommentCreatedDate
+        - CommentChangedDate
+        - CommentWriterName
+        - DisplayName
+        - CaseDisplayName
+        - IsCreatedInCaseUnity
+        - IsCreatedInCaseUnityString
+        - CaseList
+    DocumentItemDTO:
+      description: ''
+      type: object
+      properties:
+        DTOID:
+          type: string
+          minLength: 1
+        DTOStatus:
+          type: number
+        DocumentID:
+          type: number
+        DocumentMainID:
+          type: number
+        CaseID:
+          type: number
+        ConvertCaseID:
+          type: number
+        OldDocumentID:
+          type: string
+          minLength: 1
+        OldCaseID:
+          type: string
+          minLength: 1
+        DocumentIncludedDate:
+          type: string
+          minLength: 1
+        DocumentDesc:
+          type: string
+          minLength: 1
+        DocumentDirectionID:
+          type: number
+        SourceID:
+          type: number
+        SavingMethodID:
+          type: number
+        PaperDocumentSavingPlace:
+          type: string
+          minLength: 1
+        VersionNumber:
+          type: number
+        DocumentVersionTypeID:
+          type: number
+        IsAttachment:
+          type: boolean
+        AttachmentOrdinalNumber:
+          type: number
+        DocumentTypeID:
+          type: number
+        DocumentSavingDate:
+          type: string
+          minLength: 1
+        DocumentChangeDate:
+          type: string
+          minLength: 1
+        IsScanned:
+          type: boolean
+        DocumentScanningDate:
+          type: string
+          minLength: 1
+        PageQuantity:
+          type: number
+        DocumentStatusID:
+          type: number
+        DocumentStatusChangeDate:
+          type: string
+          minLength: 1
+        TemplateID:
+          type: number
+        TemplateVersionID:
+          type: number
+        DocumentChangeUserID:
+          type: string
+          minLength: 1
+        DocumentCreationUserID:
+          type: string
+          minLength: 1
+        OriginalDocumentID:
+          type: number
+        PrivillegeID:
+          type: number
+        FromPage:
+          type: number
+        ToPage:
+          type: number
+        IsScannedWithoutEntity:
+          type: boolean
+        DocumentComment:
+          type: string
+          minLength: 1
+        BoxNumber:
+          type: string
+          minLength: 1
+        Archive:
+          type: string
+          minLength: 1
+        CasePartyID:
+          type: number
+        FileID:
+          type: string
+          minLength: 1
+        OriginalFileID:
+          type: string
+          minLength: 1
+        CaseDisplayNumber:
+          type: string
+          minLength: 1
+        URL:
+          type: string
+          minLength: 1
+        SplittedNumberOfPages:
+          type: number
+        isOliveProcessed:
+          type: boolean
+        CasePartyDisplayName:
+          type: string
+          minLength: 1
+        OlivePriority:
+          type: number
+        PreFetchUrl:
+          type: string
+          minLength: 1
+        DocumentCdImportID:
+          type: string
+          minLength: 1
+        MetaDataTypeID:
+          type: number
+        MetaDataChangeDate:
+          type: string
+          minLength: 1
+        MetaData:
+          type: string
+          minLength: 1
+        NewVersionRequired:
+          type: boolean
+        IsReturned:
+          type: boolean
+        SignatureURL:
+          type: string
+          minLength: 1
+        IsCritical:
+          type: boolean
+        IsEntityCanceled:
+          type: boolean
+        IsRepresentativeRegistryOpenToPublic:
+          type: boolean
+        PresentationDate:
+          type: string
+          minLength: 1
+      required:
+        - DTOID
+        - DTOStatus
+        - DocumentID
+        - DocumentMainID
+        - CaseID
+        - ConvertCaseID
+        - OldDocumentID
+        - OldCaseID
+        - DocumentIncludedDate
+        - DocumentDesc
+        - DocumentDirectionID
+        - SourceID
+        - SavingMethodID
+        - PaperDocumentSavingPlace
+        - VersionNumber
+        - DocumentVersionTypeID
+        - IsAttachment
+        - AttachmentOrdinalNumber
+        - DocumentTypeID
+        - DocumentSavingDate
+        - DocumentChangeDate
+        - IsScanned
+        - DocumentScanningDate
+        - PageQuantity
+        - DocumentStatusID
+        - DocumentStatusChangeDate
+        - TemplateID
+        - TemplateVersionID
+        - DocumentChangeUserID
+        - DocumentCreationUserID
+        - OriginalDocumentID
+        - PrivillegeID
+        - FromPage
+        - ToPage
+        - IsScannedWithoutEntity
+        - DocumentComment
+        - BoxNumber
+        - Archive
+        - CasePartyID
+        - FileID
+        - OriginalFileID
+        - CaseDisplayNumber
+        - URL
+        - SplittedNumberOfPages
+        - isOliveProcessed
+        - CasePartyDisplayName
+        - OlivePriority
+        - PreFetchUrl
+        - DocumentCdImportID
+        - MetaDataTypeID
+        - MetaDataChangeDate
+        - MetaData
+        - NewVersionRequired
+        - IsReturned
+        - SignatureURL
+        - IsCritical
+        - IsEntityCanceled
+        - IsRepresentativeRegistryOpenToPublic
+        - PresentationDate
+      x-examples:
+        example-1:
+          DTOID: fa368fe0-45bb-45a1-892f-82c9ac38a153
+          DTOStatus: 2
+          DocumentID: 1
+          DocumentMainID: 1
+          CaseID: 1
+          ConvertCaseID: 1
+          OldDocumentID: sample string 3
+          OldCaseID: sample string 4
+          DocumentIncludedDate: '2020-12-26T13:47:19.3238775+02:00'
+          DocumentDesc: sample string 5
+          DocumentDirectionID: 1
+          SourceID: 1
+          SavingMethodID: 1
+          PaperDocumentSavingPlace: sample string 6
+          VersionNumber: 1
+          DocumentVersionTypeID: 1
+          IsAttachment: true
+          AttachmentOrdinalNumber: 1
+          DocumentTypeID: 1
+          DocumentSavingDate: '2020-12-26T13:47:19.3248758+02:00'
+          DocumentChangeDate: '2020-12-26T13:47:19.3248758+02:00'
+          IsScanned: true
+          DocumentScanningDate: '2020-12-26T13:47:19.325888+02:00'
+          PageQuantity: 1
+          DocumentStatusID: 1
+          DocumentStatusChangeDate: '2020-12-26T13:47:19.325888+02:00'
+          TemplateID: 1
+          TemplateVersionID: 1
+          DocumentChangeUserID: sample string 7
+          DocumentCreationUserID: sample string 8
+          OriginalDocumentID: 1
+          PrivillegeID: 1
+          FromPage: 1
+          ToPage: 1
+          IsScannedWithoutEntity: true
+          DocumentComment: sample string 9
+          BoxNumber: sample string 10
+          Archive: sample string 11
+          CasePartyID: 1
+          FileID: sample string 12
+          OriginalFileID: sample string 13
+          CaseDisplayNumber: sample string 14
+          URL: sample string 15
+          SplittedNumberOfPages: 1
+          isOliveProcessed: true
+          CasePartyDisplayName: sample string 16
+          OlivePriority: 1
+          PreFetchUrl: sample string 17
+          DocumentCdImportID: sample string 18
+          MetaDataTypeID: 1
+          MetaDataChangeDate: '2020-12-26T13:47:19.3278765+02:00'
+          MetaData: sample string 19
+          NewVersionRequired: true
+          IsReturned: true
+          SignatureURL: sample string 20
+          IsCritical: true
+          IsEntityCanceled: true
+          IsRepresentativeRegistryOpenToPublic: true
+          PresentationDate: '2020-12-26T13:47:19.3278765+02:00'
+    DocumentCaseDTO:
+      description: ''
+      type: object
+      properties:
+        DTOID:
+          type: string
+          minLength: 1
+        DTOStatus:
+          type: number
+        CaseID:
+          type: number
+        DocumentID:
+          type: number
+      required:
+        - DTOID
+        - DTOStatus
+        - CaseID
+        - DocumentID
+      x-examples:
+        example-1:
+          DTOID: 361df263-05de-4313-9033-dfb0d8c77fb7
+          DTOStatus: 2
+          CaseID: 1
+          DocumentID: 1
+    BookmarkDTO:
+      description: ''
+      type: object
+      properties:
+        DTOID:
+          type: string
+          minLength: 1
+        DTOStatus:
+          type: number
+        BookmarkID:
+          type: number
+        DocumentID:
+          type: number
+        BookmarkName:
+          type: string
+          minLength: 1
+        DocumentPage:
+          type: number
+      required:
+        - DTOID
+        - DTOStatus
+        - BookmarkID
+        - DocumentID
+        - BookmarkName
+        - DocumentPage
+      x-examples:
+        example-1:
+          DTOID: ede1697c-cb6b-4611-80c5-fba0976788f2
+          DTOStatus: 2
+          BookmarkID: 1
+          DocumentID: 1
+          BookmarkName: sample string 3
+          DocumentPage: 1
+    DocumentNoteDTO:
+      description: ''
+      type: object
+      properties:
+        DTOID:
+          type: string
+          minLength: 1
+        DTOStatus:
+          type: number
+        DocumentNoteID:
+          type: number
+        DocumentID:
+          type: number
+        DocumentNoteCreateDate:
+          type: string
+          minLength: 1
+        CreationUserID:
+          type: string
+          minLength: 1
+        DocumentNoteDesc:
+          type: string
+          minLength: 1
+        DocumentNoteXML:
+          type: string
+          minLength: 1
+        DescriptionPageNumber:
+          type: number
+        AccessTypeID:
+          type: number
+        NoteTypeID:
+          type: number
+        X1Location:
+          type: number
+        X2Location:
+          type: number
+        Y1Location:
+          type: number
+        Y2Location:
+          type: number
+        XmlContent:
+          type: string
+          minLength: 1
+        X1RectLocation:
+          type: number
+        X2RectLocation:
+          type: number
+        Y1RectLocation:
+          type: number
+        Y2RectLocation:
+          type: number
+        IsPopupOpen:
+          type: boolean
+        CDATA:
+          type: string
+          minLength: 1
+        Title:
+          type: string
+          minLength: 1
+        Page:
+          type: number
+        IsVisiable:
+          type: boolean
+        ActivityStatusID:
+          type: number
+        NoteCaseTitle:
+          type: string
+          minLength: 1
+        NoteComposerTitle:
+          type: string
+          minLength: 1
+        NoteZoom:
+          type: number
+      required:
+        - DTOID
+        - DTOStatus
+        - DocumentNoteID
+        - DocumentID
+        - DocumentNoteCreateDate
+        - CreationUserID
+        - DocumentNoteDesc
+        - DocumentNoteXML
+        - DescriptionPageNumber
+        - AccessTypeID
+        - NoteTypeID
+        - X1Location
+        - X2Location
+        - Y1Location
+        - Y2Location
+        - XmlContent
+        - X1RectLocation
+        - X2RectLocation
+        - Y1RectLocation
+        - Y2RectLocation
+        - IsPopupOpen
+        - CDATA
+        - Title
+        - Page
+        - IsVisiable
+        - ActivityStatusID
+        - NoteCaseTitle
+        - NoteComposerTitle
+        - NoteZoom
+      x-examples:
+        example-1:
+          DTOID: c0b674f7-8680-45fd-89ed-4cbefae6c66b
+          DTOStatus: 2
+          DocumentNoteID: 1
+          DocumentID: 1
+          DocumentNoteCreateDate: '2020-12-26T13:47:19.330876+02:00'
+          CreationUserID: sample string 3
+          DocumentNoteDesc: sample string 4
+          DocumentNoteXML: sample string 5
+          DescriptionPageNumber: 1
+          AccessTypeID: 1
+          NoteTypeID: 1
+          X1Location: 1
+          X2Location: 1
+          Y1Location: 1
+          Y2Location: 1
+          XmlContent: sample string 6
+          X1RectLocation: 1
+          X2RectLocation: 1
+          Y1RectLocation: 1
+          Y2RectLocation: 1
+          IsPopupOpen: true
+          CDATA: sample string 7
+          Title: sample string 8
+          Page: 1
+          IsVisiable: true
+          ActivityStatusID: 1
+          NoteCaseTitle: sample string 9
+          NoteComposerTitle: sample string 10
+          NoteZoom: 1
+    DocumentDTO:
+      title: DocumentDTO
+      type: object
+      properties:
+        Document:
+          $ref: '#/components/schemas/DocumentCollectionDTO'
+        DocumentCase:
+          $ref: '#/components/schemas/DocumentCaseCollectionDTO'
+        Bookmark:
+          $ref: '#/components/schemas/BookmarkCollectionDTO'
+        DocumentNote:
+          $ref: '#/components/schemas/DocumentNoteCollectionDTO'
+      x-examples:
+        example-1:
+          Document:
+            Instances:
+              - DTOID: fa368fe0-45bb-45a1-892f-82c9ac38a153
+                DTOStatus: 2
+                DocumentID: 1
+                DocumentMainID: 1
+                CaseID: 1
+                ConvertCaseID: 1
+                OldDocumentID: sample string 3
+                OldCaseID: sample string 4
+                DocumentIncludedDate: '2020-12-26T13:47:19.3238775+02:00'
+                DocumentDesc: sample string 5
+                DocumentDirectionID: 1
+                SourceID: 1
+                SavingMethodID: 1
+                PaperDocumentSavingPlace: sample string 6
+                VersionNumber: 1
+                DocumentVersionTypeID: 1
+                IsAttachment: true
+                AttachmentOrdinalNumber: 1
+                DocumentTypeID: 1
+                DocumentSavingDate: '2020-12-26T13:47:19.3248758+02:00'
+                DocumentChangeDate: '2020-12-26T13:47:19.3248758+02:00'
+                IsScanned: true
+                DocumentScanningDate: '2020-12-26T13:47:19.325888+02:00'
+                PageQuantity: 1
+                DocumentStatusID: 1
+                DocumentStatusChangeDate: '2020-12-26T13:47:19.325888+02:00'
+                TemplateID: 1
+                TemplateVersionID: 1
+                DocumentChangeUserID: sample string 7
+                DocumentCreationUserID: sample string 8
+                OriginalDocumentID: 1
+                PrivillegeID: 1
+                FromPage: 1
+                ToPage: 1
+                IsScannedWithoutEntity: true
+                DocumentComment: sample string 9
+                BoxNumber: sample string 10
+                Archive: sample string 11
+                CasePartyID: 1
+                FileID: sample string 12
+                OriginalFileID: sample string 13
+                CaseDisplayNumber: sample string 14
+                URL: sample string 15
+                SplittedNumberOfPages: 1
+                isOliveProcessed: true
+                CasePartyDisplayName: sample string 16
+                OlivePriority: 1
+                PreFetchUrl: sample string 17
+                DocumentCdImportID: sample string 18
+                MetaDataTypeID: 1
+                MetaDataChangeDate: '2020-12-26T13:47:19.3278765+02:00'
+                MetaData: sample string 19
+                NewVersionRequired: true
+                IsReturned: true
+                SignatureURL: sample string 20
+                IsCritical: true
+                IsEntityCanceled: true
+                IsRepresentativeRegistryOpenToPublic: true
+                PresentationDate: '2020-12-26T13:47:19.3278765+02:00'
+              - DTOID: fa368fe0-45bb-45a1-892f-82c9ac38a153
+                DTOStatus: 2
+                DocumentID: 1
+                DocumentMainID: 1
+                CaseID: 1
+                ConvertCaseID: 1
+                OldDocumentID: sample string 3
+                OldCaseID: sample string 4
+                DocumentIncludedDate: '2020-12-26T13:47:19.3238775+02:00'
+                DocumentDesc: sample string 5
+                DocumentDirectionID: 1
+                SourceID: 1
+                SavingMethodID: 1
+                PaperDocumentSavingPlace: sample string 6
+                VersionNumber: 1
+                DocumentVersionTypeID: 1
+                IsAttachment: true
+                AttachmentOrdinalNumber: 1
+                DocumentTypeID: 1
+                DocumentSavingDate: '2020-12-26T13:47:19.3248758+02:00'
+                DocumentChangeDate: '2020-12-26T13:47:19.3248758+02:00'
+                IsScanned: true
+                DocumentScanningDate: '2020-12-26T13:47:19.325888+02:00'
+                PageQuantity: 1
+                DocumentStatusID: 1
+                DocumentStatusChangeDate: '2020-12-26T13:47:19.325888+02:00'
+                TemplateID: 1
+                TemplateVersionID: 1
+                DocumentChangeUserID: sample string 7
+                DocumentCreationUserID: sample string 8
+                OriginalDocumentID: 1
+                PrivillegeID: 1
+                FromPage: 1
+                ToPage: 1
+                IsScannedWithoutEntity: true
+                DocumentComment: sample string 9
+                BoxNumber: sample string 10
+                Archive: sample string 11
+                CasePartyID: 1
+                FileID: sample string 12
+                OriginalFileID: sample string 13
+                CaseDisplayNumber: sample string 14
+                URL: sample string 15
+                SplittedNumberOfPages: 1
+                isOliveProcessed: true
+                CasePartyDisplayName: sample string 16
+                OlivePriority: 1
+                PreFetchUrl: sample string 17
+                DocumentCdImportID: sample string 18
+                MetaDataTypeID: 1
+                MetaDataChangeDate: '2020-12-26T13:47:19.3278765+02:00'
+                MetaData: sample string 19
+                NewVersionRequired: true
+                IsReturned: true
+                SignatureURL: sample string 20
+                IsCritical: true
+                IsEntityCanceled: true
+                IsRepresentativeRegistryOpenToPublic: true
+                PresentationDate: '2020-12-26T13:47:19.3278765+02:00'
+          DocumentCase:
+            Instances:
+              - DTOID: 361df263-05de-4313-9033-dfb0d8c77fb7
+                DTOStatus: 2
+                CaseID: 1
+                DocumentID: 1
+              - DTOID: 361df263-05de-4313-9033-dfb0d8c77fb7
+                DTOStatus: 2
+                CaseID: 1
+                DocumentID: 1
+          Bookmark:
+            Instances:
+              - DTOID: ede1697c-cb6b-4611-80c5-fba0976788f2
+                DTOStatus: 2
+                BookmarkID: 1
+                DocumentID: 1
+                BookmarkName: sample string 3
+                DocumentPage: 1
+              - DTOID: ede1697c-cb6b-4611-80c5-fba0976788f2
+                DTOStatus: 2
+                BookmarkID: 1
+                DocumentID: 1
+                BookmarkName: sample string 3
+                DocumentPage: 1
+          DocumentNote:
+            Instances:
+              - DTOID: c0b674f7-8680-45fd-89ed-4cbefae6c66b
+                DTOStatus: 2
+                DocumentNoteID: 1
+                DocumentID: 1
+                DocumentNoteCreateDate: '2020-12-26T13:47:19.330876+02:00'
+                CreationUserID: sample string 3
+                DocumentNoteDesc: sample string 4
+                DocumentNoteXML: sample string 5
+                DescriptionPageNumber: 1
+                AccessTypeID: 1
+                NoteTypeID: 1
+                X1Location: 1
+                X2Location: 1
+                Y1Location: 1
+                Y2Location: 1
+                XmlContent: sample string 6
+                X1RectLocation: 1
+                X2RectLocation: 1
+                Y1RectLocation: 1
+                Y2RectLocation: 1
+                IsPopupOpen: true
+                CDATA: sample string 7
+                Title: sample string 8
+                Page: 1
+                IsVisiable: true
+                ActivityStatusID: 1
+                NoteCaseTitle: sample string 9
+                NoteComposerTitle: sample string 10
+                NoteZoom: 1
+              - DTOID: c0b674f7-8680-45fd-89ed-4cbefae6c66b
+                DTOStatus: 2
+                DocumentNoteID: 1
+                DocumentID: 1
+                DocumentNoteCreateDate: '2020-12-26T13:47:19.330876+02:00'
+                CreationUserID: sample string 3
+                DocumentNoteDesc: sample string 4
+                DocumentNoteXML: sample string 5
+                DescriptionPageNumber: 1
+                AccessTypeID: 1
+                NoteTypeID: 1
+                X1Location: 1
+                X2Location: 1
+                Y1Location: 1
+                Y2Location: 1
+                XmlContent: sample string 6
+                X1RectLocation: 1
+                X2RectLocation: 1
+                Y1RectLocation: 1
+                Y2RectLocation: 1
+                IsPopupOpen: true
+                CDATA: sample string 7
+                Title: sample string 8
+                Page: 1
+                IsVisiable: true
+                ActivityStatusID: 1
+                NoteCaseTitle: sample string 9
+                NoteComposerTitle: sample string 10
+                NoteZoom: 1
+    DocumentsSubmittedRemotelyDataTableCollectionDTO:
+      title: DocumentsSubmittedRemotelyDataTableCollectionDTO
+      type: object
+      properties:
+        Instances:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentsSubmittedRemotelyItemDTO'
+    DocumentsSubmittedRemotelyDTO:
+      title: DocumentsSubmittedRemotelyDTO
+      type: object
+      properties:
+        DocumentsSubmittedRemotelyDataTable:
+          $ref: '#/components/schemas/DocumentsSubmittedRemotelyDataTableCollectionDTO'
+    MeetingDataByUPNCollectionDTO:
+      title: MeetingDataByUPNCollectionDTO
+      type: object
+      properties:
+        Instances:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeetingDataByUpnItemDTO'
+      x-examples:
+        example-1:
+          Instances:
+            - DTOID: 7ce971c8-b239-4b1b-bc0c-97956cf462fc
+              DTOStatus: 0
+              MeetingID: 26564ffe-9e6c-496d-9ca8-c5f1f65f29ec
+              MeetingDate: '2019-08-24T14:15:22Z'
+              StartTime: string
+              FinishTime: string
+              SittingID: 0
+              SittingTypeName: string
+              CaseID: 0
+              CaseNumber: string
+              CaseName: string
+              SittingsNumber: 0
+    MeetingDataByUpnDTO:
+      title: MeetingDataByUpnDTO
+      type: object
+      properties:
+        MeetingDataByUPN:
+          $ref: '#/components/schemas/MeetingDataByUPNCollectionDTO'
+    DocumentCollectionDTO:
+      title: DocumentCollectionDTO
+      type: object
+      properties:
+        Instances:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentItemDTO'
+      x-examples:
+        example-1:
+          Instances:
+            - DTOID: fa368fe0-45bb-45a1-892f-82c9ac38a153
+              DTOStatus: 2
+              DocumentID: 1
+              DocumentMainID: 1
+              CaseID: 1
+              ConvertCaseID: 1
+              OldDocumentID: sample string 3
+              OldCaseID: sample string 4
+              DocumentIncludedDate: '2020-12-26T13:47:19.3238775+02:00'
+              DocumentDesc: sample string 5
+              DocumentDirectionID: 1
+              SourceID: 1
+              SavingMethodID: 1
+              PaperDocumentSavingPlace: sample string 6
+              VersionNumber: 1
+              DocumentVersionTypeID: 1
+              IsAttachment: true
+              AttachmentOrdinalNumber: 1
+              DocumentTypeID: 1
+              DocumentSavingDate: '2020-12-26T13:47:19.3248758+02:00'
+              DocumentChangeDate: '2020-12-26T13:47:19.3248758+02:00'
+              IsScanned: true
+              DocumentScanningDate: '2020-12-26T13:47:19.325888+02:00'
+              PageQuantity: 1
+              DocumentStatusID: 1
+              DocumentStatusChangeDate: '2020-12-26T13:47:19.325888+02:00'
+              TemplateID: 1
+              TemplateVersionID: 1
+              DocumentChangeUserID: sample string 7
+              DocumentCreationUserID: sample string 8
+              OriginalDocumentID: 1
+              PrivillegeID: 1
+              FromPage: 1
+              ToPage: 1
+              IsScannedWithoutEntity: true
+              DocumentComment: sample string 9
+              BoxNumber: sample string 10
+              Archive: sample string 11
+              CasePartyID: 1
+              FileID: sample string 12
+              OriginalFileID: sample string 13
+              CaseDisplayNumber: sample string 14
+              URL: sample string 15
+              SplittedNumberOfPages: 1
+              isOliveProcessed: true
+              CasePartyDisplayName: sample string 16
+              OlivePriority: 1
+              PreFetchUrl: sample string 17
+              DocumentCdImportID: sample string 18
+              MetaDataTypeID: 1
+              MetaDataChangeDate: '2020-12-26T13:47:19.3278765+02:00'
+              MetaData: sample string 19
+              NewVersionRequired: true
+              IsReturned: true
+              SignatureURL: sample string 20
+              IsCritical: true
+              IsEntityCanceled: true
+              IsRepresentativeRegistryOpenToPublic: true
+              PresentationDate: '2020-12-26T13:47:19.3278765+02:00'
+            - DTOID: fa368fe0-45bb-45a1-892f-82c9ac38a153
+              DTOStatus: 2
+              DocumentID: 1
+              DocumentMainID: 1
+              CaseID: 1
+              ConvertCaseID: 1
+              OldDocumentID: sample string 3
+              OldCaseID: sample string 4
+              DocumentIncludedDate: '2020-12-26T13:47:19.3238775+02:00'
+              DocumentDesc: sample string 5
+              DocumentDirectionID: 1
+              SourceID: 1
+              SavingMethodID: 1
+              PaperDocumentSavingPlace: sample string 6
+              VersionNumber: 1
+              DocumentVersionTypeID: 1
+              IsAttachment: true
+              AttachmentOrdinalNumber: 1
+              DocumentTypeID: 1
+              DocumentSavingDate: '2020-12-26T13:47:19.3248758+02:00'
+              DocumentChangeDate: '2020-12-26T13:47:19.3248758+02:00'
+              IsScanned: true
+              DocumentScanningDate: '2020-12-26T13:47:19.325888+02:00'
+              PageQuantity: 1
+              DocumentStatusID: 1
+              DocumentStatusChangeDate: '2020-12-26T13:47:19.325888+02:00'
+              TemplateID: 1
+              TemplateVersionID: 1
+              DocumentChangeUserID: sample string 7
+              DocumentCreationUserID: sample string 8
+              OriginalDocumentID: 1
+              PrivillegeID: 1
+              FromPage: 1
+              ToPage: 1
+              IsScannedWithoutEntity: true
+              DocumentComment: sample string 9
+              BoxNumber: sample string 10
+              Archive: sample string 11
+              CasePartyID: 1
+              FileID: sample string 12
+              OriginalFileID: sample string 13
+              CaseDisplayNumber: sample string 14
+              URL: sample string 15
+              SplittedNumberOfPages: 1
+              isOliveProcessed: true
+              CasePartyDisplayName: sample string 16
+              OlivePriority: 1
+              PreFetchUrl: sample string 17
+              DocumentCdImportID: sample string 18
+              MetaDataTypeID: 1
+              MetaDataChangeDate: '2020-12-26T13:47:19.3278765+02:00'
+              MetaData: sample string 19
+              NewVersionRequired: true
+              IsReturned: true
+              SignatureURL: sample string 20
+              IsCritical: true
+              IsEntityCanceled: true
+              IsRepresentativeRegistryOpenToPublic: true
+              PresentationDate: '2020-12-26T13:47:19.3278765+02:00'
+    DocumentCaseCollectionDTO:
+      title: DocumentCaseCollectionDTO
+      type: object
+      properties:
+        Instances:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentCaseDTO'
+    BookmarkCollectionDTO:
+      title: BookmarkCollectionDTO
+      type: object
+      properties:
+        Instances:
+          type: array
+          items:
+            $ref: '#/components/schemas/BookmarkDTO'
+    DocumentNoteCollectionDTO:
+      title: DocumentNoteCollectionDTO
+      type: object
+      properties:
+        Instances:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentNoteDTO'
+  securitySchemes: {}
+security: []

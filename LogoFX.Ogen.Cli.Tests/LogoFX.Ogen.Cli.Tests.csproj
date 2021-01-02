@@ -1,15 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyName>ogen</AssemblyName>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
     <IsPackable>false</IsPackable>
     <Version>1.0.0.0</Version>
     <Authors>David Kossoglyad</Authors>
     <Company>LogoFX</Company>
     <Product>LogoFX Ogen CLI</Product>
-    <PackageId>LogoFX.Ogen.Cli</PackageId>
+    <PackageId>LogoFX.Ogen.Cli.Tests</PackageId>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
     <NeutralLanguage>en</NeutralLanguage>
@@ -23,18 +21,26 @@
     <PackageTags></PackageTags>
     <PackageReleaseNotes></PackageReleaseNotes>
   </PropertyGroup>
-  <!--PropertyGroup>
+  <!-- <PropertyGroup>
     <GeneratedAssemblyInfoFile>false</GeneratedAssemblyInfoFile>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-  </PropertyGroup-->
-
+  </PropertyGroup> -->
 
   <ItemGroup>
-    <PackageReference Include="DotLiquid" Version="2.0.366" />
-    <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="3.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
-    <PackageReference Include="Microsoft.OpenApi" Version="1.2.3" />
-    <PackageReference Include="Microsoft.OpenApi.Readers" Version="1.2.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="1.3.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LogoFX.Ogen.Cli\LogoFX.Ogen.Cli.csproj" />
   </ItemGroup>
 
 </Project>

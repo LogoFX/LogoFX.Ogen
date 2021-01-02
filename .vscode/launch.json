@@ -10,8 +10,8 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/LogoFX.Ogen.Cli/bin/Debug/net5.0/LogoFX.Ogen.Cli.dll",
-            "args": [],
+            "program": "${workspaceFolder}/LogoFX.Ogen.Cli/bin/Debug/net5.0/ogen.dll",
+            "args": [ "api.yaml" ],
             "cwd": "${workspaceFolder}/LogoFX.Ogen.Cli",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
